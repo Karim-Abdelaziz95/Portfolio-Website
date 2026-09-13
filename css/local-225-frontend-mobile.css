@@ -140,7 +140,7 @@
 @media (max-width: 767px) {
   .site .e-3ecff1e-e282dcf:hover,
   .site .e-3ecff1e-e282dcf:focus-visible {
-    font-size: 5px;
+    font-size: inherit;
   }
 }
 @media (max-width: 767px) {
@@ -150,7 +150,8 @@
 }
 @media (max-width: 767px) {
   .site .e-0e680c4-a2fc7f1 {
-    width: 1400px;
+    width: 100%;
+    max-width: 100%;
   }
 }
 @media (max-width: 767px) {
