@@ -1,137 +1,190 @@
-# 👋 Hi, I'm Karim Abdelaziz
+# 𝕂𝕒𝕣𝕚𝕞 𝔸𝕓𝕕𝕖𝕝𝕒𝕫𝕚𝕫 𝔽𝕒𝕣𝕠𝕦𝕜 — Portfolio
 
-### 💻 Aspiring Software Developer | Java, Python & Web Development
+## I build digital experiences that feel as good as they work.
 
-I'm a Computer Science student at Alexandria University with a passion for software development, problem solving, and building practical projects.
+## A modern, responsive portfolio website showcasing my work, development skills, services, and projects.
 
-I'm continuously improving my programming skills and exploring different areas of software development.
+🌐 Live Website:
+https://karim-abdelaziz95.github.io/Portfolio-Website/
 
-I Built This Website Using WordPress.
+⸻
 
----
-## My Portfolio Website
-https://karim-abdelaziz95.github.io/Portfolio/
----
+👨‍💻 About Me
 
-## 🚀 About Me
+Hi! I’m Karim Abdelaziz Farouk, a Web Developer focused on building responsive interfaces, thoughtful interactions, solid performance, and maintainable code.
 
-🎓 Computer Science Student at **Alexandria University**
+I enjoy turning ideas into digital experiences that are:
 
-💻 Aspiring **Software Developer**
+* 🎨 Clean and visually appealing
+* 📱 Fully responsive
+* ⚡ Fast and performance-focused
+* 🧩 Easy to understand and maintain
+* ✨ Interactive without unnecessary complexity
 
-☕ Currently focusing on **Java & Object-Oriented Programming**
+I’m particularly interested in building modern web applications and continuously improving my skills across both frontend and backend development.
 
-🐍 Learning and working with **Python**
+⸻
 
-🌐 Building projects with **HTML & CSS**
+🚀 What I Do
 
-🧠 Interested in **Problem Solving & Software Engineering**
+🎨 Modern Responsive Design
 
-📚 Always learning and improving my skills
+I build responsive interfaces with:
 
----
+* Modern layouts
+* Smooth scrolling
+* Lightweight animations
+* Accessible components
+* Performance-focused assets
+* Mobile-first considerations
 
-## 🛠️ Tech Stack
+🧼 Clean UI & Frontend Development
 
-### Languages
+Focused on creating interfaces that are both visually polished and practical.
 
-<p>
-  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
-</p>
+Skills include:
 
-### Tools
+* Responsive UI development
+* JavaScript development
+* API integration
+* Accessibility
+* Debugging
+* Clean and maintainable code
 
-<p>
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
-  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
-  <img src="https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"/>
-  <img src="https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=for-the-badge&logo=intellijidea&logoColor=white"/>
-</p>
+🛠️ Full-Stack Development
 
-### Concepts
+I work across the entire web stack, from frontend interfaces to backend APIs and databases.
 
-- Object-Oriented Programming (OOP)
-- Problem Solving
-- Data Structures & Algorithms
-- Git & GitHub
-- Software Development Fundamentals
+Stack:
 
----
+* React
+* Node.js
+* Express.js
+* PostgreSQL
+* REST APIs
 
-## 📂 Featured Projects
+⸻
 
-### 🎮 Game System
+🎮 Featured Project
 
-A Java project focused on applying programming and Object-Oriented Programming concepts while building a functional game system.
+Java RPG Game System
 
-🔗 [View Repository](https://github.com/Karim-Abdelaziz95/Game-System)
+A Java-based RPG game that evolved from a console-based OOP application into a full desktop game using Java Swing.
 
----
+✨ Highlights
 
-### 🌐 Portfolio
+* Built entirely with Java
+* Strong focus on Object-Oriented Programming
+* Applied SOLID principles
+* Used abstraction and inheritance
+* Implemented enums, lambda expressions, and varargs
+* Migrated from a console application to a graphical desktop application
+* Built a custom dark-themed interface
+* Added animated progress bars
+* Implemented an inventory system
+* Added real-time progress tracking
 
-My personal portfolio website showcasing my skills, projects, and development journey.
+🔗 View Project:
+GitHub Repository
 
-🔗 [View Repository](https://github.com/Karim-Abdelaziz95/Portfolio)
+⸻
 
----
+🧰 Technologies
 
-### 📚 Git & GitHub Course
+Frontend
 
-A collection of exercises and practical work created while learning Git and GitHub.
+* HTML5
+* CSS3
+* JavaScript
+* React
 
-🔗 [View Repository](https://github.com/Karim-Abdelaziz95/Git-and-Github-Course)
+Backend
 
----
+* Node.js
+* Express.js
+* REST APIs
 
-## 📚 Currently Learning
+Database
 
-- ☕ Advanced Java
-- 🧱 Object-Oriented Programming
-- 🧠 Data Structures & Algorithms
-- 🐍 Python
-- 🌐 Web Development
-- ⚙️ Software Engineering
+* PostgreSQL
 
----
+Programming
 
-## 🎯 My Goals
+* Java
+* Object-Oriented Programming
+* SOLID Principles
 
-I'm working toward becoming a strong Software Developer by:
+Tools
 
-- Building real-world projects
-- Improving my problem-solving skills
-- Writing clean and maintainable code
-- Learning backend development
-- Strengthening my knowledge of data structures and algorithms
-- Contributing to open-source projects
+* Git
+* GitHub
+* VS Code
+* NetBeans
 
----
+⸻
 
-## 📊 GitHub Stats
+🎯 Portfolio Features
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Karim-Abdelaziz95&show_icons=true&theme=tokyonight&hide_border=true" height="170"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Karim-Abdelaziz95&layout=compact&theme=tokyonight&hide_border=true" height="170"/>
-</p>
+The portfolio was designed with a strong focus on the overall user experience.
 
----
+* Responsive design
+* Smooth scrolling
+* Interactive UI elements
+* Lightweight animations
+* Clean visual hierarchy
+* Project showcase
+* Services section
+* Contact section
+* Social links
+* Performance-conscious implementation
 
-## 🤝 Connect With Me
+⸻
 
-<p>
-  <a href="https://github.com/Karim-Abdelaziz95">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
-  </a>
+📂 Project Structure
 
-  <a href="https://www.linkedin.com/">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
-  </a>
-</p>
+Portfolio-Website/
+│
+├── index.html
+├── css/
+│   └── style.css
+│
+├── js/
+│   └── script.js
+│
+├── images/
+│   └── ...
+│
+└── README.md
 
----
+File and folder names may vary depending on the current version of the project.
 
-⭐ Thanks for visiting my profile!
+⸻
+
+🌐 Live Preview
+
+Check out the live portfolio:
+
+https://karim-abdelaziz95.github.io/Portfolio-Website/
+
+⸻
+
+📬 Contact
+
+If you’d like to discuss a project, collaboration, or website development:
+
+Email:
+karimabdelaziz1082006@gmail.com
+
+GitHub:
+https://github.com/karim-abdelaziz95
+
+LinkedIn:
+https://www.linkedin.com/
+
+⸻
+
+📄 License
+
+This project is primarily a personal portfolio created to showcase my development work, skills, and projects.
+
+© 2026 Karim Abdelaziz Farouk. All rights reserved.
