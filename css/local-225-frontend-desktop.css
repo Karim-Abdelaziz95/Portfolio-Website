@@ -118,12 +118,12 @@
   background-color: #857b7b33;
 }
 .site .e-86767d8 {
-  padding-block-start: 50px;
-  padding-block-end: 50px;
-  padding-inline-start: 30px;
-  padding-inline-end: 30px;
+  padding-block-start: 64px;
+  padding-block-end: 64px;
+  padding-inline-start: 36px;
+  padding-inline-end: 36px;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
 .site .e-71ccaa0-35a3edc {
   font-weight: 600;
@@ -141,12 +141,12 @@
   background-color: #857b7b33;
 }
 .site .e-018aafb {
-  padding-block-start: 50px;
-  padding-block-end: 50px;
-  padding-inline-start: 30px;
-  padding-inline-end: 30px;
+  padding-block-start: 64px;
+  padding-block-end: 64px;
+  padding-inline-start: 36px;
+  padding-inline-end: 36px;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
 .site .e-cfef679-34fa82e {
   font-weight: 600;
@@ -164,19 +164,21 @@
   background-color: #857b7b33;
 }
 .site .e-5e14653-8f4c2d5 {
-  padding-block-start: 50px;
-  padding-block-end: 50px;
-  padding-inline-start: 30px;
-  padding-inline-end: 30px;
+  padding-block-start: 64px;
+  padding-block-end: 64px;
+  padding-inline-start: 36px;
+  padding-inline-end: 36px;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
 .site .e-a61b978 {
-  padding-block-start: 30px;
-  padding-inline-start: 30px;
-  padding-inline-end: 30px;
+  padding-block-start: 44px;
+  padding-block-end: 44px;
+  padding-inline-start: 36px;
+  padding-inline-end: 36px;
   background-color: #ffffff;
   flex-direction: column;
+  gap: 28px;
 }
 .site .e-77c0543-ff89a28 {
   font-size: 35px;

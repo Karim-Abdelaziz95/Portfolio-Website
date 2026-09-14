@@ -52,6 +52,26 @@
   }
 }
 @media (max-width: 1024px) {
+  .site .e-86767d8,
+  .site .e-018aafb,
+  .site .e-5e14653-8f4c2d5 {
+    padding-block-start: 34px;
+    padding-block-end: 34px;
+    padding-inline-start: 24px;
+    padding-inline-end: 24px;
+    gap: 22px;
+  }
+}
+@media (max-width: 1024px) {
+  .site .e-a61b978 {
+    padding-block-start: 34px;
+    padding-block-end: 34px;
+    padding-inline-start: 24px;
+    padding-inline-end: 24px;
+    gap: 22px;
+  }
+}
+@media (max-width: 1024px) {
   .site .e-ab355eb-aeaef6f {
     font-size: 20px;
   }
