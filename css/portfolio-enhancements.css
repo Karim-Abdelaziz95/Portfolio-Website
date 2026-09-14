@@ -59,16 +59,36 @@ body::before {
   box-shadow: 0 8px 28px rgba(11, 30, 61, 0.22);
 }
 
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.04rem;
+  line-height: 0;
+  overflow: visible;
+  isolation: isolate;
+}
+
 .nav-logo img {
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+  transition: transform 0.35s ease;
+  transform-origin: center;
+  will-change: transform;
 }
 
 .nav-logo:hover img,
 .nav-logo:focus-visible img {
-  transform: rotate(-4deg) scale(1.06);
-  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.28);
+  transform: translateY(-2px) rotate(-4deg) scale(1.06);
+  box-shadow: none;
+}
+
+.nav-logo h3 {
+  margin: 0;
+  line-height: 1;
 }
 
 .nav-links a {
