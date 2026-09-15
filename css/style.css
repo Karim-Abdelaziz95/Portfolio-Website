@@ -2908,14 +2908,15 @@ body::before {
 }
 
 #work .e-0e680c4-a2fc7f1 {
-  transition:
-    transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1),
-    filter 0.4s ease;
-}
-
-#work .e-31e2925:hover .e-0e680c4-a2fc7f1 {
-  transform: scale(1.035);
-  filter: saturate(1.05);
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 919 / 644;
+  border: 0;
+  border-radius: 25px;
+  touch-action: auto;
 }
 
 .project-stack {
