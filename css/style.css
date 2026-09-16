@@ -263,7 +263,6 @@ textarea {
 @charset "UTF-8";
 
 body,
-dt,
 h1,
 h2,
 h3,
@@ -414,9 +413,6 @@ li > ul {
   margin-bottom: 0;
   margin-left: 1.5em;
 }
-dt {
-  font-weight: 600;
-}
 b {
   font-weight: 700;
 }
@@ -425,16 +421,6 @@ i {
   font-style: italic;
 }
 
-q {
-  quotes: "" "";
-}
-
-q:after,
-q:before {
-  content: "";
-}
-
-tt,
 var {
   font:
     1em Monaco,

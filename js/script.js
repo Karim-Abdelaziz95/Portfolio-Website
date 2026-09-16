@@ -1,3 +1,4 @@
+/* --- SOURCE: inline script (responsive header breakpoint) --- */
 (function () {
   var mq = window.matchMedia("(max-width: 921.99px)");
 
@@ -40,39 +41,39 @@ window.onSkipLinkClick = function onSkipLinkClick() {
 document.addEventListener("DOMContentLoaded", function () {
   var content = document.getElementById("content");
   var skipLink = document.querySelector(".a11y-skip-to-content-link");
-  var navToggle = document.getElementById("nav-toggle");
-  var navLinks = document.getElementById("nav-links");
 
   if (!content && skipLink) {
     skipLink.remove();
   }
-
-  if (navToggle && navLinks) {
-    navToggle.addEventListener("click", function () {
-      var expanded = navToggle.getAttribute("aria-expanded") === "true";
-
-      navToggle.setAttribute("aria-expanded", String(!expanded));
-      navLinks.classList.toggle("nav-open", !expanded);
-    });
-
-    navLinks.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", function () {
-        navToggle.setAttribute("aria-expanded", "false");
-        navLinks.classList.remove("nav-open");
-      });
-    });
-
-    window.addEventListener("resize", function () {
-      if (window.innerWidth > 781) {
-        navToggle.setAttribute("aria-expanded", "false");
-        navLinks.classList.remove("nav-open");
-      }
-    });
-  }
 });
 
-/* --- SOURCE: inline script --- */
+/* Mobile nav toggle: single source of truth for open/close state,
+   used by the button click, closing on link selection, and resetting
+   on resize back to desktop width. */
+(function () {
+  var toggle = document.getElementById("nav-toggle");
+  var links = document.getElementById("nav-links");
+  if (!toggle || !links) return;
 
+  function setOpen(open) {
+    toggle.setAttribute("aria-expanded", String(open));
+    links.classList.toggle("nav-open", open);
+  }
+
+  toggle.addEventListener("click", function () {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  links.addEventListener("click", function (event) {
+    if (event.target.tagName === "A") setOpen(false);
+  });
+
+  window.addEventListener("resize", function () {
+    if (window.innerWidth > 781) setOpen(false);
+  });
+})();
+
+/* --- SOURCE: inline script (theme config) --- */
 var theme = {
   break_point: "921",
   isRtl: "",
@@ -85,34 +86,33 @@ var theme = {
 //# sourceURL=theme-theme-js-js-extra
 
 /* --- SOURCE: js/frontend.min.js --- */
-
 var themeGetParents = function (e, t) {
-    for (var a = []; e && e !== document; e = e.parentNode)
-      (!t || e.matches(t)) && a.push(e);
-    return a;
+    for (var n = []; e && e !== document; e = e.parentNode)
+      (!t || e.matches(t)) && n.push(e);
+    return n;
   },
   themeToggleClass = function (e, t) {
     e.classList.contains(t) ? e.classList.remove(t) : e.classList.add(t);
   },
   themeTriggerEvent = function (e, t) {
-    t = new CustomEvent(
+    ((t = new CustomEvent(
       t,
       2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {},
-    );
-    e.dispatchEvent(t);
+    )),
+      e.dispatchEvent(t));
   };
 ((themeSmoothScroll = function (e, t) {
   (e.preventDefault(),
     window.scrollTo({ top: t, left: 0, behavior: "smooth" }));
 }),
   (astScrollToTopHandler = function (e, t) {
-    var a = getComputedStyle(t).content,
-      n = t.dataset.onDevices,
-      a = a.replace(/[^0-9]/g, "");
-    "both" == n || ("desktop" == n && "769" == a) || ("mobile" == n && "" == a)
-      ? ((n = window.pageYOffset || document.body.scrollTop),
+    var n = getComputedStyle(t).content,
+      o = t.dataset.onDevices;
+    n = n.replace(/[^0-9]/g, "");
+    "both" == o || ("desktop" == o && "769" == n) || ("mobile" == o && "" == n)
+      ? ((o = window.pageYOffset || document.body.scrollTop),
         e && e.length
-          ? n > e.offsetHeight + 100
+          ? o > e.offsetHeight + 100
             ? (t.style.display = "block")
             : (t.style.display = "none")
           : 300 < window.pageYOffset
@@ -121,29 +121,32 @@ var themeGetParents = function (e, t) {
       : (t.style.display = "none");
   }),
   (() => {
-    var r = document.querySelectorAll("#masthead .main-header-menu-toggle"),
-      g = document.getElementById("masthead"),
-      i = {},
-      c = "",
-      d = document.body,
-      p = "";
-    function e(e) {
-      c = e.detail.type;
-      e = document.querySelectorAll(".menu-toggle");
-      ("dropdown" === c &&
-        (document
-          .getElementById("gx-mobile-popup")
-          .classList.remove("active", "show"),
-        h("updateHeader")),
-        "off-canvas" === c &&
+    var e = document.querySelectorAll("#masthead .main-header-menu-toggle"),
+      t = document.getElementById("masthead"),
+      n = {},
+      o = "",
+      a = document.body,
+      r = "";
+    function l(e) {
+      ((o = e.detail.type),
+        (e = document.querySelectorAll(".menu-toggle")),
+        "dropdown" === o &&
+          (document
+            .getElementById("gx-mobile-popup")
+            .classList.remove("active", "show"),
+          i("updateHeader")),
+        "off-canvas" === o &&
           e.forEach(function (e) {
             e && e.classList.contains("toggled") && e.click();
           }),
-        t(c));
+        s(o));
     }
-    function h(e) {
-      p = g.querySelector("#gx-mobile-header");
-      if (null == p || "dropdown" !== p.dataset.type || "updateHeader" === e) {
+    function i(e) {
+      if (
+        null == (r = t.querySelector("#gx-mobile-header")) ||
+        "dropdown" !== r.dataset.type ||
+        "updateHeader" === e
+      ) {
         (void 0 !== e && "updateHeader" !== e
           ? e.closest(".gx-mobile-popup-inner")
           : document.querySelector("#gx-mobile-popup")
@@ -162,63 +165,62 @@ var themeGetParents = function (e, t) {
                     : (e.style.display = "none"));
               }));
           });
-        var t = document.querySelectorAll(".menu-toggle");
+        var n = document.querySelectorAll(".menu-toggle");
         (document.body.classList.remove(
           "gx-main-header-nav-open",
           "gx-popup-nav-open",
         ),
           document.documentElement.classList.remove("gx-off-canvas-active"));
-        for (var a = 0; a < t.length; a++)
-          (t[a].classList.remove("toggled"),
-            t[a].setAttribute("aria-expanded", "false"),
-            (t[a].style.display = "flex"));
+        for (var o = 0; o < n.length; o++)
+          (n[o].classList.remove("toggled"),
+            n[o].setAttribute("aria-expanded", "false"),
+            (n[o].style.display = "flex"));
       }
     }
-    function t(e) {
-      var a = document.querySelectorAll("#gx-mobile-header .menu-toggle"),
-        n = document.querySelectorAll("#gx-desktop-header .menu-toggle");
-      if (void 0 === e && null !== g)
-        if ((p = g.querySelector("#gx-mobile-header"))) e = p.dataset.type;
+    function s(e) {
+      var n = document.querySelectorAll("#gx-mobile-header .menu-toggle"),
+        o = document.querySelectorAll("#gx-desktop-header .menu-toggle");
+      if (void 0 === e && null !== t)
+        if ((r = t.querySelector("#gx-mobile-header"))) e = r.dataset.type;
         else {
-          var s = g.querySelector("#gx-desktop-header");
-          if (!s) return;
-          e = s.dataset.toggleType;
+          if (!(a = t.querySelector("#gx-desktop-header"))) return;
+          e = a.dataset.toggleType;
         }
       if ("off-canvas" === e) {
-        var s = document.getElementById("menu-toggle-close"),
-          o = document.querySelector(".gx-mobile-popup-inner");
-        if (null != o) {
-          ((popupLinks = o.getElementsByTagName("a")),
-            document.removeEventListener("keydown", l),
-            document.addEventListener("keydown", l),
-            s && s.addEventListener("click", i),
+        var a = document.getElementById("menu-toggle-close"),
+          l = document.querySelector(".gx-mobile-popup-inner");
+        if (null != l) {
+          ((popupLinks = l.getElementsByTagName("a")),
+            document.removeEventListener("keydown", d),
+            document.addEventListener("keydown", d),
+            a && a.addEventListener("click", u),
             document.addEventListener("keyup", function (e) {
-              "Escape" === e.key && i();
+              "Escape" === e.key && u();
             }),
             document.addEventListener("click", function (e) {
               e.target ===
                 document.querySelector(
                   ".gx-mobile-popup-drawer.active .gx-mobile-popup-overlay",
-                ) && i();
+                ) && u();
             }));
-          for (var r = 0; r < a.length; r++)
-            (a[r].removeEventListener("click", themeNavMenuToggle, !1),
-              a[r].removeEventListener("click", popupTriggerClick),
-              a[r].addEventListener(
+          for (var s = 0; s < n.length; s++)
+            (n[s].removeEventListener("click", themeNavMenuToggle, !1),
+              n[s].removeEventListener("click", popupTriggerClick),
+              n[s].addEventListener(
                 "click",
                 function (e) {
                   (e.currentTarget.setAttribute("aria-expanded", "true"),
                     popupTriggerClick(e),
                     document.querySelector(".gx-mobile-popup-drawer.active") ||
-                      i());
+                      u());
                 },
                 !1,
               ),
-              (a[r].trigger_type = "mobile"));
-          for (r = 0; r < n.length; r++)
-            (n[r].removeEventListener("click", themeNavMenuToggle, !1),
-              n[r].removeEventListener("click", popupTriggerClick),
-              n[r].addEventListener(
+              (n[s].trigger_type = "mobile"));
+          for (s = 0; s < o.length; s++)
+            (o[s].removeEventListener("click", themeNavMenuToggle, !1),
+              o[s].removeEventListener("click", popupTriggerClick),
+              o[s].addEventListener(
                 "click",
                 function (e) {
                   (e.currentTarget.setAttribute("aria-expanded", "true"),
@@ -226,14 +228,14 @@ var themeGetParents = function (e, t) {
                 },
                 !1,
               ),
-              (n[r].trigger_type = "desktop"));
-          let t = document.querySelector(".gx-button-wrap .menu-toggle");
-          (s.addEventListener("click", function (e) {
+              (o[s].trigger_type = "desktop"));
+          let f = document.querySelector(".gx-button-wrap .menu-toggle");
+          (a.addEventListener("click", function (e) {
             (document
               .getElementById("gx-mobile-popup")
               .classList.remove("active", "show"),
-              h(this),
-              window.self === window.top && t?.focus());
+              i(this),
+              window.self === window.top && f?.focus());
           }),
             document.addEventListener("keyup", function (e) {
               "Escape" === e.key &&
@@ -241,8 +243,8 @@ var themeGetParents = function (e, t) {
                 document
                   .getElementById("gx-mobile-popup")
                   .classList.remove("active", "show"),
-                h(),
-                t?.focus());
+                i(),
+                f?.focus());
             }),
             document.addEventListener("click", function (e) {
               e.target ===
@@ -252,329 +254,328 @@ var themeGetParents = function (e, t) {
                 (document
                   .getElementById("gx-mobile-popup")
                   .classList.remove("active", "show"),
-                h(),
-                t?.focus());
+                i(),
+                f?.focus());
             }));
-          for (let e = 0, t = popupLinks.length; e < t; e++)
-            null !== popupLinks[e].getAttribute("href") &&
-              (popupLinks[e].getAttribute("href").startsWith("#") ||
-                -1 !== popupLinks[e].getAttribute("href").search("#")) &&
-              (!popupLinks[e].parentElement.classList.contains(
+          for (let y = 0, b = popupLinks.length; y < b; y++)
+            null !== popupLinks[y].getAttribute("href") &&
+              (popupLinks[y].getAttribute("href").startsWith("#") ||
+                -1 !== popupLinks[y].getAttribute("href").search("#")) &&
+              (!popupLinks[y].parentElement.classList.contains(
                 "menu-item-has-children",
               ) ||
-                (popupLinks[e].parentElement.classList.contains(
+                (popupLinks[y].parentElement.classList.contains(
                   "menu-item-has-children",
                 ) &&
                   document
                     .querySelector("header.site-header")
                     .classList.contains("gx-builder-menu-toggle-icon"))) &&
-              (popupLinks[e].addEventListener("click", v, !0),
-              (popupLinks[e].headerType = "off-canvas"));
-          function l(e) {
+              (popupLinks[y].addEventListener("click", c, !0),
+              (popupLinks[y].headerType = "off-canvas"));
+          function d(e) {
             var t,
-              a = document.getElementById("gx-mobile-popup");
-            a &&
-              a.classList.contains("active") &&
+              n = document.getElementById("gx-mobile-popup");
+            n &&
+              n.classList.contains("active") &&
               "Tab" === e.key &&
-              ((a = o.querySelectorAll(
+              ((n = l.querySelectorAll(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
               )),
               0 !==
-                (a = Array.prototype.filter.call(a, function (e) {
+                (n = Array.prototype.filter.call(n, function (e) {
                   return (
                     0 < e.offsetWidth &&
                     0 < e.offsetHeight &&
                     "hidden" !== window.getComputedStyle(e).visibility
                   );
                 })).length) &&
-              ((t = a[0]),
-              (a = a[a.length - 1]),
+              ((t = n[0]),
+              (n = n[n.length - 1]),
               e.shiftKey && document.activeElement === t
-                ? (e.preventDefault(), a.focus())
+                ? (e.preventDefault(), n.focus())
                 : e.shiftKey ||
-                  document.activeElement !== a ||
+                  document.activeElement !== n ||
                   (e.preventDefault(), t.focus()));
           }
-          function i() {
-            document.removeEventListener("keydown", l);
+          function u() {
+            document.removeEventListener("keydown", d);
           }
           ThemeToggleSetup();
         }
       } else if ("dropdown" === e) {
-        var t = document.querySelectorAll(".gx-mobile-header-content") || !1,
-          s = document.querySelector(".gx-desktop-header-content") || !1;
-        if (0 < t.length)
-          for (let e = 0; e < t.length; e++) {
-            var c = t[e].getElementsByTagName("a");
-            for (link = 0, len = c.length; link < len; link++) {
-              var d = null === c[link].closest(".fw-block-uagb-tabs");
-              null !== c[link].getAttribute("href") &&
-                (c[link].getAttribute("href").startsWith("#") ||
-                  -1 !== c[link].getAttribute("href").search("#")) &&
-                (!c[link].parentElement.classList.contains(
+        var m = document.querySelectorAll(".gx-mobile-header-content") || !1;
+        a = document.querySelector(".gx-desktop-header-content") || !1;
+        if (0 < m.length)
+          for (let L = 0; L < m.length; L++) {
+            var g = m[L].getElementsByTagName("a");
+            for (link = 0, len = g.length; link < len; link++) {
+              var h = null === g[link].closest(".fw-block-uagb-tabs");
+              null !== g[link].getAttribute("href") &&
+                (g[link].getAttribute("href").startsWith("#") ||
+                  -1 !== g[link].getAttribute("href").search("#")) &&
+                (!g[link].parentElement.classList.contains(
                   "menu-item-has-children",
                 ) ||
-                  (c[link].parentElement.classList.contains(
+                  (g[link].parentElement.classList.contains(
                     "menu-item-has-children",
                   ) &&
                     document
                       .querySelector("header.site-header")
                       .classList.contains("gx-builder-menu-toggle-icon"))) &&
-                d &&
-                (c[link].addEventListener("click", v, !0),
-                (c[link].headerType = "dropdown"));
+                h &&
+                (g[link].addEventListener("click", c, !0),
+                (g[link].headerType = "dropdown"));
             }
           }
-        if (s) {
-          var u = s.getElementsByTagName("a");
-          for (link = 0, len = u.length; link < len; link++) {
-            var m = null === u[link].closest(".fw-block-uagb-tabs");
-            null !== u[link].getAttribute("href") &&
-              (u[link].getAttribute("href").startsWith("#") ||
-                -1 !== u[link].getAttribute("href").search("#")) &&
-              (!u[link].parentElement.classList.contains(
+        if (a) {
+          var p = a.getElementsByTagName("a");
+          for (link = 0, len = p.length; link < len; link++) {
+            var v = null === p[link].closest(".fw-block-uagb-tabs");
+            null !== p[link].getAttribute("href") &&
+              (p[link].getAttribute("href").startsWith("#") ||
+                -1 !== p[link].getAttribute("href").search("#")) &&
+              (!p[link].parentElement.classList.contains(
                 "menu-item-has-children",
               ) ||
-                (u[link].parentElement.classList.contains(
+                (p[link].parentElement.classList.contains(
                   "menu-item-has-children",
                 ) &&
                   document
                     .querySelector("header.site-header")
                     .classList.contains("gx-builder-menu-toggle-icon"))) &&
-              m &&
-              (u[link].addEventListener("click", v, !0),
-              (u[link].headerType = "dropdown"));
+              v &&
+              (p[link].addEventListener("click", c, !0),
+              (p[link].headerType = "dropdown"));
           }
         }
-        for (r = 0; r < a.length; r++)
-          (a[r].removeEventListener("click", popupTriggerClick, !1),
-            a[r].removeEventListener("click", themeNavMenuToggle),
-            a[r].addEventListener("click", themeNavMenuToggle, !1),
-            (a[r].trigger_type = "mobile"));
-        for (r = 0; r < n.length; r++)
-          (n[r].removeEventListener("click", popupTriggerClick, !1),
-            n[r].removeEventListener("click", themeNavMenuToggle),
-            n[r].addEventListener("click", themeNavMenuToggle, !1),
-            (n[r].trigger_type = "desktop"));
+        for (s = 0; s < n.length; s++)
+          (n[s].removeEventListener("click", popupTriggerClick, !1),
+            n[s].removeEventListener("click", themeNavMenuToggle),
+            n[s].addEventListener("click", themeNavMenuToggle, !1),
+            (n[s].trigger_type = "mobile"));
+        for (s = 0; s < o.length; s++)
+          (o[s].removeEventListener("click", popupTriggerClick, !1),
+            o[s].removeEventListener("click", themeNavMenuToggle),
+            o[s].addEventListener("click", themeNavMenuToggle, !1),
+            (o[s].trigger_type = "desktop"));
         ThemeToggleSetup();
       }
     }
-    function v(e) {
+    function c(e) {
       switch (e.currentTarget.headerType) {
         case "dropdown":
           for (
-            var t = document.querySelectorAll(".menu-toggle.toggled"), a = 0;
-            a < t.length;
-            a++
+            var t = document.querySelectorAll(".menu-toggle.toggled"), n = 0;
+            n < t.length;
+            n++
           )
-            t[a].click();
+            t[n].click();
           break;
         case "off-canvas":
           document.getElementById("menu-toggle-close").click();
       }
     }
-    ("" !== (p = null != g ? g.querySelector("#gx-mobile-header") : p) &&
-      null !== p &&
-      (c = p.dataset.type),
-      document.addEventListener("astMobileHeaderTypeChange", e, !1),
+    ("" !== (r = null != t ? t.querySelector("#gx-mobile-header") : r) &&
+      null !== r &&
+      (o = r.dataset.type),
+      document.addEventListener("astMobileHeaderTypeChange", l, !1),
       document.addEventListener("click", function (e) {
-        e = e.target.closest(".menu-toggle");
-        if (e && "dropdown" === c) {
+        if ((e = e.target.closest(".menu-toggle")) && "dropdown" === o) {
           if ("undefined" == typeof themeAddon) {
             e.classList.toggle("toggled");
             {
-              var a = document.querySelectorAll(".menu-toggle");
-              let t = Array.from(a).every((e) =>
+              var t = document.querySelectorAll(".menu-toggle");
+              let e = Array.from(t).every((e) =>
                 e.classList.contains("toggled"),
               );
-              a.forEach((e) => {
-                t
-                  ? (e.classList.remove("toggled"),
-                    e.setAttribute("aria-expanded", "false"))
-                  : (e.classList.add("toggled"),
-                    e.setAttribute("aria-expanded", "true"));
+              t.forEach((t) => {
+                e
+                  ? (t.classList.remove("toggled"),
+                    t.setAttribute("aria-expanded", "false"))
+                  : (t.classList.add("toggled"),
+                    t.setAttribute("aria-expanded", "true"));
               });
             }
           }
-          a = e.classList.contains("toggled");
-          e.setAttribute("aria-expanded", a ? "true" : "false");
+          ((t = e.classList.contains("toggled")),
+            e.setAttribute("aria-expanded", t ? "true" : "false"));
         }
       }),
       (popupTriggerClick = function (e) {
         var t = e.currentTarget.trigger_type,
-          a = document.getElementById("gx-mobile-popup");
-        (d.classList.contains("gx-popup-nav-open") ||
-          d.classList.add("gx-popup-nav-open"),
-          d.classList.contains("gx-main-header-nav-open") ||
+          n = document.getElementById("gx-mobile-popup");
+        (a.classList.contains("gx-popup-nav-open") ||
+          a.classList.add("gx-popup-nav-open"),
+          a.classList.contains("gx-main-header-nav-open") ||
             "mobile" === t ||
-            d.classList.add("gx-main-header-nav-open"),
+            a.classList.add("gx-main-header-nav-open"),
           document.documentElement.classList.contains("gx-off-canvas-active") ||
             document.documentElement.classList.add("gx-off-canvas-active"),
           "desktop" === t &&
-            ((a.querySelector(".gx-mobile-popup-content").style.display =
+            ((n.querySelector(".gx-mobile-popup-content").style.display =
               "none"),
-            (a.querySelector(".gx-desktop-popup-content").style.display =
+            (n.querySelector(".gx-desktop-popup-content").style.display =
               "block")),
           "mobile" === t &&
-            ((a.querySelector(".gx-desktop-popup-content").style.display =
+            ((n.querySelector(".gx-desktop-popup-content").style.display =
               "none"),
-            (a.querySelector(".gx-mobile-popup-content").style.display =
+            (n.querySelector(".gx-mobile-popup-content").style.display =
               "block")),
           e &&
             e.currentTarget &&
             e.currentTarget.style &&
             (e.currentTarget.style.display = "none"),
-          a.classList.add("active", "show"),
+          n.classList.add("active", "show"),
           document.getElementById("menu-toggle-close")?.focus());
       }),
       window.addEventListener("load", function () {
-        t();
+        s();
       }),
       document.addEventListener("astLayoutWidthChanged", function () {
-        t();
+        s();
       }),
       document.addEventListener("astPartialContentRendered", function () {
-        ((r = document.querySelectorAll(".main-header-menu-toggle")),
-          d.classList.remove("gx-main-header-nav-open"),
-          document.addEventListener("astMobileHeaderTypeChange", e, !1),
-          t());
+        ((e = document.querySelectorAll(".main-header-menu-toggle")),
+          a.classList.remove("gx-main-header-nav-open"),
+          document.addEventListener("astMobileHeaderTypeChange", l, !1),
+          s());
       }));
-    var s =
+    var d =
       null !== navigator.userAgent.match(/Android/i) &&
       "Android" === navigator.userAgent.match(/Android/i)[0]
         ? window.visualViewport.width
         : window.innerWidth;
     (window.addEventListener("resize", function () {
-      var e, t, a, n;
+      var e, t, n, o;
       "INPUT" !== document.activeElement.tagName &&
         ((e = document.getElementById("menu-toggle-close")),
         (t = document.querySelector(".menu-toggle.toggled")),
-        (a = document.querySelector(
+        (n = document.querySelector(
           "#masthead > #gx-desktop-header .gx-desktop-header-content",
         )),
-        (n = document.querySelector(".site-editor-active")),
-        a && (a.style.display = "none"),
+        (o = document.querySelector(".site-editor-active")),
+        n && (n.style.display = "none"),
         (null !== navigator.userAgent.match(/Android/i) &&
         "Android" === navigator.userAgent.match(/Android/i)[0]
           ? window.visualViewport.width
-          : window.innerWidth) !== s &&
-          (t && null === n && t.click(),
+          : window.innerWidth) !== d &&
+          (t && null === o && t.click(),
           document.body.classList.remove(
             "gx-main-header-nav-open",
             "gx-popup-nav-open",
           ),
           e) &&
-          null == n &&
+          null == o &&
           e.click(),
-        o(),
+        g(),
         ThemeToggleSetup());
     }),
       document.addEventListener("DOMContentLoaded", function () {
         if (
           (ThemeToggleSetup(),
           null !==
-            (e = d.classList.contains("gx-header-break-point")
+            (e = a.classList.contains("gx-header-break-point")
               ? document.getElementById("gx-mobile-header")
               : document.getElementById("gx-desktop-header")))
         ) {
           var e,
             t = e.querySelector(".navigation-accessibility");
           if (t && e) {
-            var a =
+            var n =
               e.getElementsByTagName("button")[0] ||
               e.getElementsByTagName("a")[0];
-            if (a && !a.classList.contains("theme-search-icon")) {
-              var n = t.getElementsByTagName("ul")[0];
-              if (n) {
+            if (n && !n.classList.contains("theme-search-icon")) {
+              var r = t.getElementsByTagName("ul")[0];
+              if (r) {
                 if (
-                  (n.className.includes("nav-menu") ||
-                    (n.className += " nav-menu"),
+                  (r.className.includes("nav-menu") ||
+                    (r.className += " nav-menu"),
                   document.addEventListener("DOMContentLoaded", function () {
                     var e;
-                    "off-canvas" === c &&
+                    "off-canvas" === o &&
                       (e = document.getElementById("menu-toggle-close")) &&
                       (e.onclick = function () {
                         var e = t.className.includes("toggled");
                         ((t.className = e
                           ? t.className.replace(" toggled", "")
                           : t.className + " toggled"),
-                          a.setAttribute("aria-expanded", e ? "false" : "true"),
-                          n.setAttribute(
+                          n.setAttribute("aria-expanded", e ? "false" : "true"),
+                          r.setAttribute(
                             "aria-expanded",
                             e ? "false" : "true",
                           ));
                       });
                   }),
-                  (a.onclick = function () {
+                  (n.onclick = function () {
                     var e = t.className.includes("toggled");
                     ((t.className = e
                       ? t.className.replace(" toggled", "")
                       : t.className + " toggled"),
-                      a.setAttribute("aria-expanded", e ? "false" : "true"),
-                      n.setAttribute("aria-expanded", e ? "false" : "true"));
+                      n.setAttribute("aria-expanded", e ? "false" : "true"),
+                      r.setAttribute("aria-expanded", e ? "false" : "true"));
                   }),
                   !theme.is_header_footer_builder_active)
                 ) {
                   for (
-                    var s = n.getElementsByTagName("a"),
-                      o = n.getElementsByTagName("ul"),
-                      r = 0,
-                      l = o.length;
-                    r < l;
-                    r++
+                    var l = r.getElementsByTagName("a"),
+                      i = r.getElementsByTagName("ul"),
+                      s = 0,
+                      c = i.length;
+                    s < c;
+                    s++
                   )
-                    o[r].parentNode.setAttribute("aria-haspopup", "true");
-                  for (r = 0, l = s.length; r < l; r++)
-                    (s[r].addEventListener("focus", b, !0),
-                      s[r].addEventListener("blur", b, !0),
-                      s[r].addEventListener("click", y, !0));
+                    i[s].parentNode.setAttribute("aria-haspopup", "true");
+                  for (s = 0, c = l.length; s < c; s++)
+                    (l[s].addEventListener("focus", b, !0),
+                      l[s].addEventListener("blur", b, !0),
+                      l[s].addEventListener("click", y, !0));
                 }
                 theme.is_header_footer_builder_active &&
                   (() => {
-                    let s = document.querySelectorAll(
+                    let e = document.querySelectorAll(
                         "nav.site-navigation .menu-item-has-children > a .gx-header-navigation-arrow",
                       ),
-                      o = document.querySelectorAll(
+                      t = document.querySelectorAll(
                         "nav.site-navigation .sub-menu",
                       ),
-                      r = document.querySelectorAll(
+                      n = document.querySelectorAll(
                         "nav.site-navigation .menu-item-has-children",
                       ),
-                      l = document.querySelectorAll(
+                      o = document.querySelectorAll(
                         ".theme-full-megamenu-wrapper",
                       );
-                    s &&
-                      (s.forEach((e) => {
-                        (e.addEventListener("keydown", function (s) {
-                          if ("Enter" === s.key || " " === s.key) {
+                    e &&
+                      (e.forEach((r) => {
+                        (r.addEventListener("keydown", function (e) {
+                          if ("Enter" === e.key || " " === e.key) {
                             /Mobi|Android|iPad|iPhone/i.test(
                               navigator.userAgent,
-                            ) && (s.preventDefault(), s.stopPropagation());
-                            let t = s.target.closest("li"),
-                              a = t.querySelector(".sub-menu"),
-                              n = a && a.classList.contains("theme-megamenu");
+                            ) && (e.preventDefault(), e.stopPropagation());
+                            let t = e.target.closest("li"),
+                              n = t.querySelector(".sub-menu"),
+                              o = n && n.classList.contains("theme-megamenu");
                             setTimeout(() => {
-                              (n
-                                ? ((e = t.querySelector(
+                              (o
+                                ? ((a = t.querySelector(
                                     ".theme-full-megamenu-wrapper",
                                   )),
+                                  n &&
+                                    n.classList.toggle("theme-megamenu-focus"),
                                   a &&
-                                    a.classList.toggle("theme-megamenu-focus"),
-                                  e &&
-                                    e.classList.toggle(
+                                    a.classList.toggle(
                                       "theme-megamenu-wrapper-focus",
                                     ))
-                                : a.classList.toggle("toggled-on"),
+                                : n.classList.toggle("toggled-on"),
                                 t.classList.toggle("gx-menu-hover"));
-                              var e = s.target.getAttribute("aria-expanded");
-                              s.target.setAttribute(
+                              var a = e.target.getAttribute("aria-expanded");
+                              e.target.setAttribute(
                                 "aria-expanded",
-                                "false" !== e && e ? "false" : "true",
+                                "false" !== a && a ? "false" : "true",
                               );
                             }, 10);
                           }
                         }),
-                          e.addEventListener(
+                          r.addEventListener(
                             "pointerdown",
                             function (e) {
                               e.currentTarget.dataset.astPointerType =
@@ -582,98 +583,103 @@ var themeGetParents = function (e, t) {
                             },
                             !1,
                           ),
-                          e.addEventListener(
+                          r.addEventListener(
                             "click",
-                            function (e) {
-                              var t,
-                                a,
-                                n = e.currentTarget;
-                              "touch" === n.dataset.astPointerType &&
-                                d.classList.contains("gx-desktop") &&
-                                (a =
-                                  (t = n.closest("li")) &&
-                                  t.querySelector(".sub-menu")) &&
-                                (e.preventDefault(),
-                                e.stopPropagation(),
-                                (e =
-                                  "true" === n.getAttribute("aria-expanded")),
-                                f(o, s, r, l),
-                                e ||
-                                  (a.classList.add("toggled-on"),
-                                  t.classList.add("gx-menu-hover"),
-                                  n.setAttribute("aria-expanded", "true")));
+                            function (r) {
+                              var l,
+                                i,
+                                s = r.currentTarget;
+                              "touch" === s.dataset.astPointerType &&
+                                a.classList.contains("gx-desktop") &&
+                                (i =
+                                  (l = s.closest("li")) &&
+                                  l.querySelector(".sub-menu")) &&
+                                (r.preventDefault(),
+                                r.stopPropagation(),
+                                (r =
+                                  "true" === s.getAttribute("aria-expanded")),
+                                f(t, e, n, o),
+                                r ||
+                                  (i.classList.add("toggled-on"),
+                                  l.classList.add("gx-menu-hover"),
+                                  s.setAttribute("aria-expanded", "true")));
                             },
                             !1,
                           ));
                       }),
-                      o || r) &&
+                      t || n) &&
                       (document.addEventListener(
                         "click",
-                        function (e) {
-                          f(o, s, r, l);
+                        function (a) {
+                          f(t, e, n, o);
                         },
                         !1,
                       ),
                       document.addEventListener(
                         "keydown",
-                        function (e) {
-                          "Escape" === e.key && f(o, s, r, l);
+                        function (a) {
+                          "Escape" === a.key && f(t, e, n, o);
                         },
                         !1,
                       ));
-                    var e = document.querySelectorAll(
+                    var r = document.querySelectorAll(
                       "nav.site-navigation .gx-nav-menu > .menu-item-has-children > a .gx-header-navigation-arrow",
                     );
-                    (e &&
-                      e.forEach((e) => {
-                        e.addEventListener(
+                    (r &&
+                      r.forEach((a) => {
+                        a.addEventListener(
                           "keydown",
-                          function (e) {
-                            e.target
+                          function (a) {
+                            a.target
                               .closest("li")
                               .classList.contains("gx-menu-hover") ||
-                              "Enter" !== e.key ||
-                              f(o, s, r, l);
+                              "Enter" !== a.key ||
+                              f(t, e, n, o);
                           },
                           !1,
                         );
                       }),
-                      (e = document.querySelectorAll(
+                      (r = document.querySelectorAll(
                         "#gx-desktop-header .gx-builder-layout-element.gx-builder-menu",
                       )).forEach((e) => {
                         e.querySelectorAll(
                           ".main-header-menu .menu-item > a",
                         ).forEach((e) => {
                           e.addEventListener("focusout", function (e) {
-                            var t = e.relatedTarget,
-                              a = t ? t.closest(".menu-item") : null,
-                              t = e.target.closest(".menu-item"),
-                              e = t.classList.contains("gx-menu-hover"),
-                              n = t.querySelector(".sub-menu"),
-                              s = t.closest(".sub-menu"),
-                              o = t
+                            var t,
+                              n = (t = e.relatedTarget)
+                                ? t.closest(".menu-item")
+                                : null,
+                              o =
+                                ((e = (t =
+                                  e.target.closest(
+                                    ".menu-item",
+                                  )).classList.contains("gx-menu-hover")),
+                                t.querySelector(".sub-menu")),
+                              a = t.closest(".sub-menu"),
+                              r = t
                                 .closest(".sub-menu")
                                 ?.closest(".menu-item-has-children"),
-                              r = t.querySelector(".menu-item");
-                            if (!(t == a || (r && r == a)))
-                              if (null == a) (s && m(s), n && m(n));
+                              l = t.querySelector(".menu-item");
+                            if (!(t == n || (l && l == n)))
+                              if (null == n) (a && v(a), o && v(o));
                               else if (
-                                t.nextElementSibling == a ||
-                                t.previousElementSibling == a
+                                t.nextElementSibling == n ||
+                                t.previousElementSibling == n
                               )
                                 e &&
-                                  (m(n, !1),
+                                  (v(o, !1),
                                   t.classList.remove("gx-menu-hover"));
-                              else if (o && o == a)
-                                m(
+                              else if (r && r == n)
+                                v(
                                   (childSubMenu = t.querySelector(".sub-menu")),
                                   !1,
                                 );
                               else {
-                                let e = o,
+                                let e = r,
                                   t = null;
                                 for (; null != e; ) {
-                                  if (e.nextElementSibling == a) {
+                                  if (e.nextElementSibling == n) {
                                     t = e.querySelector(".sub-menu");
                                     break;
                                   }
@@ -681,50 +687,50 @@ var themeGetParents = function (e, t) {
                                     .closest(".sub-menu")
                                     ?.closest(".menu-item-has-children");
                                 }
-                                s && m(s, !0, t);
+                                a && v(a, !0, t);
                               }
                           });
                         });
                       }));
                   })();
               } else
-                a.classList.contains("custom-logo-link") ||
-                  (a.style.display = "none");
+                n.classList.contains("custom-logo-link") ||
+                  (n.style.display = "none");
             }
           }
         }
       }));
     for (
-      var a,
-        n,
-        o = function () {
-          var e = window.innerWidth,
-            t = theme.break_point;
+      var u,
+        m,
+        g = function () {
+          var t = window.innerWidth,
+            n = theme.break_point;
           if (
-            window.matchMedia("(max-width: " + (parseFloat(t) + 0.99) + "px)")
+            window.matchMedia("(max-width: " + (parseFloat(n) + 0.99) + "px)")
               .matches &&
-            0 !== e
+            0 !== t
           )
-            (d.classList.add("gx-header-break-point"),
-              d.classList.remove("gx-desktop"),
-              themeTriggerEvent(d, "theme-header-responsive-disabled"));
+            (a.classList.add("gx-header-break-point"),
+              a.classList.remove("gx-desktop"),
+              themeTriggerEvent(a, "theme-header-responsive-disabled"));
           else {
-            if (0 < r.length)
-              for (var a = 0; a < r.length; a++)
-                null !== r[a] && r[a].classList.remove("toggled");
-            (d.classList.remove("gx-header-break-point"),
-              d.classList.add("gx-desktop"),
-              themeTriggerEvent(d, "theme-header-responsive-enabled"));
+            if (0 < e.length)
+              for (var o = 0; o < e.length; o++)
+                null !== e[o] && e[o].classList.remove("toggled");
+            (a.classList.remove("gx-header-break-point"),
+              a.classList.add("gx-desktop"),
+              themeTriggerEvent(a, "theme-header-responsive-enabled"));
           }
         },
-        l =
-          (o(),
-          d.classList.add("gx-header-loaded"),
+        h =
+          (g(),
+          a.classList.add("gx-header-loaded"),
           (ThemeToggleSubMenu = function (e) {
             e.preventDefault();
             for (
               var t = this.parentNode,
-                a =
+                n =
                   (t.classList.contains("menu-item-has-children") &&
                     document
                       .querySelector("header.site-header")
@@ -743,28 +749,24 @@ var themeGetParents = function (e, t) {
                         "#" !== e &&
                         (window.location = e))),
                   t.querySelectorAll(".menu-item-has-children")),
-                n = 0;
-              n < a.length;
-              n++
+                o = 0;
+              o < n.length;
+              o++
             ) {
-              a[n].classList.remove("gx-submenu-expanded");
-              var s = a[n].querySelector(".sub-menu, .children");
-              null !== s && (s.style.display = "none");
+              n[o].classList.remove("gx-submenu-expanded");
+              var a = n[o].querySelector(".sub-menu, .children");
+              null !== a && (a.style.display = "none");
             }
-            for (
-              var o = t.parentNode.querySelectorAll(".menu-item-has-children"),
-                n = 0;
-              n < o.length;
-              n++
-            )
-              if (o[n] != t) {
-                o[n].classList.remove("gx-submenu-expanded");
+            var r = t.parentNode.querySelectorAll(".menu-item-has-children");
+            for (o = 0; o < r.length; o++)
+              if (r[o] != t) {
+                r[o].classList.remove("gx-submenu-expanded");
                 for (
-                  var r = o[n].querySelectorAll(".sub-menu"), l = 0;
-                  l < r.length;
-                  l++
+                  var l = r[o].querySelectorAll(".sub-menu"), i = 0;
+                  i < l.length;
+                  i++
                 )
-                  r[l].style.display = "none";
+                  l[i].style.display = "none";
               }
             t.classList.contains("menu-item-has-children") &&
               (themeToggleClass(t, "gx-submenu-expanded"),
@@ -777,119 +779,119 @@ var themeGetParents = function (e, t) {
               "undefined" != typeof themeAddon &&
               "function" == typeof themeToggleSetupPro
             )
-              themeToggleSetupPro(c, d, i);
+              themeToggleSetupPro(o, a, n);
             else {
               var e,
                 t,
-                a,
-                n = !1;
+                r,
+                l = !1;
               if (
                 0 <
                   (e =
-                    "off-canvas" === c || "full-width" === c
+                    "off-canvas" === o || "full-width" === o
                       ? ((t = document.querySelectorAll(
                           "#gx-mobile-popup, #gx-mobile-header",
                         )),
-                        (a = document.querySelectorAll(
+                        (r = document.querySelectorAll(
                           "#gx-mobile-header .main-header-menu-toggle",
                         )).length)
                       : ((t = document.querySelectorAll("#gx-mobile-header")),
-                        (n = !(
+                        (l = !(
                           0 <
-                          (e = (a = document.querySelectorAll(
+                          (e = (r = document.querySelectorAll(
                             "#gx-mobile-header .main-header-menu-toggle",
                           )).length)
                         ))
                           ? 1
                           : e)) ||
-                n
+                l
               )
-                for (var s = 0; s < e; s++)
+                for (var i = 0; i < e; i++)
                   if (
-                    (n ||
-                      (a[s].setAttribute("data-index", s), i[s]) ||
-                      ((i[s] = a[s]),
-                      a[s].removeEventListener("click", themeNavMenuToggle),
-                      a[s].addEventListener("click", themeNavMenuToggle, !1)),
-                    void 0 !== t[s])
+                    (l ||
+                      (r[i].setAttribute("data-index", i), n[i]) ||
+                      ((n[i] = r[i]),
+                      r[i].removeEventListener("click", themeNavMenuToggle),
+                      r[i].addEventListener("click", themeNavMenuToggle, !1)),
+                    void 0 !== t[i])
                   )
-                    for (var o, r = 0; r < t.length; r++)
+                    for (var s, c = 0; c < t.length; c++)
                       if (
                         0 <
-                        (o = document
+                        (s = document
                           .querySelector("header.site-header")
                           .classList.contains("gx-builder-menu-toggle-link")
-                          ? t[r].querySelectorAll(
+                          ? t[c].querySelectorAll(
                               "ul.main-header-menu .menu-item-has-children > .menu-link, ul.main-header-menu .gx-menu-toggle",
                             )
-                          : t[r].querySelectorAll(
+                          : t[c].querySelectorAll(
                               "ul.main-header-menu .gx-menu-toggle",
                             )).length
                       )
-                        for (var l = 0; l < o.length; l++)
-                          (o[l].removeEventListener(
+                        for (var d = 0; d < s.length; d++)
+                          (s[d].removeEventListener(
                             "click",
                             ThemeToggleSubMenu,
                           ),
-                            o[l].addEventListener(
+                            s[d].addEventListener(
                               "click",
                               ThemeToggleSubMenu,
                               !1,
                             ));
             }
           }),
-          (themeNavMenuToggle = function (e) {
+          (themeNavMenuToggle = function (t) {
             if ("undefined" != typeof themeAddon)
-              themeNavMenuTogglePro(e, d, c, this);
+              themeNavMenuTogglePro(t, a, o, this);
             else {
-              e.preventDefault();
-              var e = document.querySelectorAll(
-                  "#masthead > #gx-mobile-header .main-header-bar-navigation",
-                ),
-                t =
-                  ((r = document.querySelectorAll(
-                    "#masthead > #gx-mobile-header .main-header-menu-toggle",
-                  )),
-                  "0");
+              t.preventDefault();
+              t = document.querySelectorAll(
+                "#masthead > #gx-mobile-header .main-header-bar-navigation",
+              );
+              var n =
+                ((e = document.querySelectorAll(
+                  "#masthead > #gx-mobile-header .main-header-menu-toggle",
+                )),
+                "0");
               if (
                 (null !== this.closest("#gx-fixed-header") &&
-                  ((e = document.querySelectorAll(
+                  ((t = document.querySelectorAll(
                     "#gx-fixed-header > #gx-mobile-header .main-header-bar-navigation",
                   )),
-                  (r = document.querySelectorAll(
+                  (e = document.querySelectorAll(
                     "#gx-fixed-header .main-header-menu-toggle",
                   )),
-                  (t = "0")),
-                void 0 === e[t])
+                  (n = "0")),
+                void 0 === t[n])
               )
                 return !1;
               for (
-                var a = e[t].querySelectorAll(".menu-item-has-children"), n = 0;
-                n < a.length;
-                n++
+                var r = t[n].querySelectorAll(".menu-item-has-children"), l = 0;
+                l < r.length;
+                l++
               ) {
-                a[n].classList.remove("gx-submenu-expanded");
+                r[l].classList.remove("gx-submenu-expanded");
                 for (
-                  var s = a[n].querySelectorAll(".sub-menu"), o = 0;
-                  o < s.length;
-                  o++
+                  var i = r[l].querySelectorAll(".sub-menu"), s = 0;
+                  s < i.length;
+                  s++
                 )
-                  s[o].style.display = "none";
+                  i[s].style.display = "none";
               }
               -1 !==
                 (this.getAttribute("class") || "").indexOf(
                   "main-header-menu-toggle",
                 ) &&
-                (themeToggleClass(e[t], "toggle-on"),
-                themeToggleClass(r[t], "toggled"),
-                e[t].classList.contains("toggle-on")
-                  ? ((e[t].style.display = "block"),
-                    d.classList.add("gx-main-header-nav-open"))
-                  : ((e[t].style.display = ""),
-                    d.classList.remove("gx-main-header-nav-open")));
+                (themeToggleClass(t[n], "toggle-on"),
+                themeToggleClass(e[n], "toggled"),
+                t[n].classList.contains("toggle-on")
+                  ? ((t[n].style.display = "block"),
+                    a.classList.add("gx-main-header-nav-open"))
+                  : ((t[n].style.display = ""),
+                    a.classList.remove("gx-main-header-nav-open")));
             }
           }),
-          d.addEventListener(
+          a.addEventListener(
             "theme-header-responsive-enabled",
             function () {
               var e = document.querySelectorAll(".main-header-bar-navigation");
@@ -899,35 +901,35 @@ var themeGetParents = function (e, t) {
                     (e[t].classList.remove("toggle-on"),
                     (e[t].style.display = ""));
                   for (
-                    var a = e[t].getElementsByClassName("sub-menu"), n = 0;
-                    n < a.length;
-                    n++
-                  )
-                    a[n].style.display = "";
-                  for (
-                    var s = e[t].getElementsByClassName("children"), o = 0;
-                    o < s.length;
+                    var n = e[t].getElementsByClassName("sub-menu"), o = 0;
+                    o < n.length;
                     o++
                   )
-                    s[o].style.display = "";
+                    n[o].style.display = "";
                   for (
-                    var r = e[t].getElementsByClassName("gx-search-menu-icon"),
-                      l = 0;
-                    l < r.length;
-                    l++
+                    var a = e[t].getElementsByClassName("children"), r = 0;
+                    r < a.length;
+                    r++
                   )
-                    (r[l].classList.remove("gx-dropdown-active"),
-                      (r[l].style.display = ""));
+                    a[r].style.display = "";
+                  for (
+                    var l = e[t].getElementsByClassName("gx-search-menu-icon"),
+                      i = 0;
+                    i < l.length;
+                    i++
+                  )
+                    (l[i].classList.remove("gx-dropdown-active"),
+                      (l[i].style.display = ""));
                 }
             },
             !1,
           ),
           document.getElementsByClassName("theme-search-icon")),
-        u = 0;
-      u < l.length;
-      u++
+        p = 0;
+      p < h.length;
+      p++
     )
-      l[u].onclick = function (e) {
+      h[p].onclick = function (e) {
         var t;
         this.classList.contains("slide-search") &&
           (e.preventDefault(),
@@ -945,30 +947,30 @@ var themeGetParents = function (e, t) {
                 t.querySelector(".search-field").focus();
               }, 200)));
       };
-    function m(e, t = !0, a = null) {
+    function v(e, t = !0, n = null) {
       (e.classList.remove("toggled-on"),
         e.classList.remove("theme-megamenu-focus"));
-      var n = e
+      var o = e
         .closest(".menu-item-has-children")
         .querySelector(".gx-header-navigation-arrow");
-      (n && n.setAttribute("aria-expanded", "false"),
-        (t = a ? !0 : t) &&
-          null !== (n = e.parentElement.closest(".sub-menu")) &&
-          e !== a &&
-          m(n, !0, a));
+      (o && o.setAttribute("aria-expanded", "false"),
+        (t = !!n || t) &&
+          null !== (o = e.parentElement.closest(".sub-menu")) &&
+          e !== n &&
+          v(o, !0, n));
     }
-    function f(e, t, a, n) {
+    function f(e, t, n, o) {
       (e &&
         e.forEach((e) => {
           (e.classList.remove("theme-megamenu-focus"),
             e.classList.remove("toggled-on"));
         }),
-        a &&
-          a.forEach((e) => {
-            e.classList.remove("gx-menu-hover");
-          }),
         n &&
           n.forEach((e) => {
+            e.classList.remove("gx-menu-hover");
+          }),
+        o &&
+          o.forEach((e) => {
             e.classList.remove("theme-megamenu-wrapper-focus");
           }),
         t &&
@@ -985,7 +987,7 @@ var themeGetParents = function (e, t) {
         -1 !== String(e).indexOf("#")
       ) {
         var t = e.parentNode;
-        if (d.classList.contains("gx-header-break-point"))
+        if (a.classList.contains("gx-header-break-point"))
           (document
             .querySelector("header.site-header")
             .classList.contains("gx-builder-menu-toggle-link") &&
@@ -1034,7 +1036,7 @@ var themeGetParents = function (e, t) {
               themeToggleClass(t, "gx-dropdown-active"));
           }));
       }),
-      (d.onclick = function (e) {
+      (a.onclick = function (e) {
         if (
           void 0 !== e.target.classList &&
           !e.target.classList.contains("gx-search-menu-icon") &&
@@ -1043,95 +1045,94 @@ var themeGetParents = function (e, t) {
         )
           for (
             var t = document.getElementsByClassName("gx-search-menu-icon"),
-              a = 0;
-            a < t.length;
-            a++
+              n = 0;
+            n < t.length;
+            n++
           )
-            t[a].classList.remove("gx-dropdown-active");
+            t[n].classList.remove("gx-dropdown-active");
       }),
       theme.is_header_footer_builder_active ||
         ("querySelector" in document &&
           "addEventListener" in window &&
-          (d.addEventListener("mousedown", function () {
-            d.classList.add("gx-mouse-clicked");
+          (a.addEventListener("mousedown", function () {
+            a.classList.add("gx-mouse-clicked");
           }),
-          d.addEventListener("keydown", function () {
-            d.classList.remove("gx-mouse-clicked");
+          a.addEventListener("keydown", function () {
+            a.classList.remove("gx-mouse-clicked");
           }))),
       theme.is_scroll_to_id)
     ) {
-      let s = (e) => {
+      let e = (e) => {
           let t = 0;
           for (; e; ) ((t += e.offsetTop), (e = e.offsetParent));
           return t;
         },
-        t = (e, t = null) => {
-          let a = 0;
-          var n = document.querySelector(".site-header");
-          n &&
-            (0 < (n = n.querySelectorAll("div[data-stick-support]")).length
-              ? n.forEach((e) => (a += e.clientHeight))
+        t = (t, n = null) => {
+          let o = 0;
+          var a = document.querySelector(".site-header");
+          a &&
+            (0 < (a = a.querySelectorAll("div[data-stick-support]")).length
+              ? a.forEach((e) => (o += e.clientHeight))
               : "undefined" == typeof themeAddon ||
                 (Number(themeAddon.sticky_hide_on_scroll) &&
                   !document?.querySelector(".gx-header-sticked")) ||
-                ((n = document.querySelector("#gx-fixed-header")) &&
-                  ((a = n?.clientHeight),
+                ((a = document.querySelector("#gx-fixed-header")) &&
+                  ((o = a?.clientHeight),
                   Number(themeAddon?.header_main_shrink)) &&
-                  n
+                  a
                     ?.querySelectorAll(
                       ".gx-above-header-wrap, .gx-below-header-wrap",
                     )
-                    ?.forEach(() => (a -= 10))),
-            (n = t || e.target?.closest("a").hash)) &&
-            (t = document.querySelector(n)) &&
-            (t =
-              (n = s(t)) -
-              (a =
+                    ?.forEach(() => (o -= 10))),
+            (a = n || t.target?.closest("a").hash)) &&
+            (n = document.querySelector(a)) &&
+            (n =
+              (a = e(n)) -
+              (o =
                 "undefined" != typeof themeAddon &&
                 Number(themeAddon.sticky_hide_on_scroll) &&
-                window?.scrollY < n
+                window?.scrollY < a
                   ? 0
-                  : a)) &&
-            themeSmoothScroll(e, t);
+                  : o)) &&
+            themeSmoothScroll(t, n);
         },
-        o = [];
+        n = [];
       var L = document.querySelectorAll(
         'a[href*="#"]:not([href="#"]):not([href="#0"]):not([href*="uagb-tab"]):not(.uagb-toc-link__trigger):not(.skip-link):not(.nav-links a):not([href*="tab-"])',
       );
       if (L)
         for (let e of L)
           e.href.split("#")[0] !== location.href.split("#")[0]
-            ? o.push({ hash: e.hash, url: e.href.split("#")[0] })
+            ? n.push({ hash: e.hash, url: e.href.split("#")[0] })
             : "" !== e.hash && e.addEventListener("click", t);
-      window.addEventListener("DOMContentLoaded", (e) => {
-        for (var a of o)
+      window.addEventListener("DOMContentLoaded", (o) => {
+        for (var a of n)
           if (window.location.href.split("#")[0] === a.url) {
-            var n = document.querySelector(".site-header");
+            var r = document.querySelector(".site-header");
             let t = 0;
-            ((n = n.querySelectorAll("div[data-stick-support]")),
-              (n =
-                (n &&
-                  n.forEach((e) => {
-                    t += e.clientHeight;
-                  }),
-                document.querySelector(a.hash))));
-            n && (a = s(n) - t) && themeSmoothScroll(e, a);
+            ((r = r.querySelectorAll("div[data-stick-support]")) &&
+              r.forEach((e) => {
+                t += e.clientHeight;
+              }),
+              (r = document.querySelector(a.hash)) &&
+                (a = e(r) - t) &&
+                themeSmoothScroll(o, a));
           }
         location.hash &&
           setTimeout(() => t(new Event("click"), location.hash), 750);
       });
     }
     (theme.is_scroll_to_top &&
-      ((a = document.querySelector("#page header")),
-      (n = document.getElementById("gx-scroll-top")),
-      astScrollToTopHandler(a, n),
+      ((u = document.querySelector("#page header")),
+      (m = document.getElementById("gx-scroll-top")),
+      astScrollToTopHandler(u, m),
       window.addEventListener("scroll", function () {
-        astScrollToTopHandler(a, n);
+        astScrollToTopHandler(u, m);
       }),
-      (n.onclick = function (e) {
+      (m.onclick = function (e) {
         themeSmoothScroll(e, 0);
       }),
-      n.addEventListener("keydown", function (e) {
+      m.addEventListener("keydown", function (e) {
         "Enter" === e.key && themeSmoothScroll(e, 0);
       })),
       theme?.is_dark_palette
@@ -1139,13 +1140,13 @@ var themeGetParents = function (e, t) {
         : document.documentElement.classList.remove("theme-dark-mode-enable"),
       window.addEventListener("DOMContentLoaded", (e) => {
         var t = document.querySelector(".gx-woocommerce-store-notice-hanged");
-        let a = () => {
+        let n = () => {
           var e = document.querySelector(
             '.woocommerce-store-notice[data-position="hang-over-top"]',
           );
           document.body.style.paddingTop = `${e?.clientHeight || 0}px`;
         };
-        (t && (window.addEventListener("resize", a), setTimeout(() => a(), 0)),
+        (t && (window.addEventListener("resize", n), setTimeout(() => n(), 0)),
           document
             .querySelector(".woocommerce-store-notice__dismiss-link")
             ?.addEventListener("click", () => {
@@ -1153,53 +1154,56 @@ var themeGetParents = function (e, t) {
                 (document.body.classList.remove(
                   "gx-woocommerce-store-notice-hanged",
                 ),
-                window.removeEventListener("resize", a),
+                window.removeEventListener("resize", n),
                 (document.body.style.paddingTop = 0));
             }));
       }));
   })(),
   document.addEventListener("DOMContentLoaded", function () {
-    let t = document.querySelectorAll(".menu-link .dropdown-menu-toggle");
-    function n(e) {
-      var e = e.closest(".menu-link"),
-        t = e.nextElementSibling.classList.contains("toggled-on");
+    let e = document.querySelectorAll(".menu-link .dropdown-menu-toggle");
+    function t(e) {
+      var t = (e =
+        e.closest(".menu-link")).nextElementSibling.classList.contains(
+        "toggled-on",
+      );
       e.setAttribute("aria-expanded", t ? "true" : "false");
     }
-    (document.querySelectorAll(".menu-item-has-children > a").forEach((t) => {
-      t.addEventListener("keydown", function (e) {
-        "Enter" === e.key &&
-          (e = t.nextElementSibling) &&
-          e.classList.contains("sub-menu") &&
-          (e.classList.toggle("gx-visible"),
-          (e = "false" === t.getAttribute("aria-expanded") ? "true" : "false"),
-          t.setAttribute("aria-expanded", e));
+    (document.querySelectorAll(".menu-item-has-children > a").forEach((e) => {
+      e.addEventListener("keydown", function (t) {
+        "Enter" === t.key &&
+          (t = e.nextElementSibling) &&
+          t.classList.contains("sub-menu") &&
+          (t.classList.toggle("gx-visible"),
+          (t = "false" === e.getAttribute("aria-expanded") ? "true" : "false"),
+          e.setAttribute("aria-expanded", t));
       });
     }),
-      t.forEach((a) => {
-        (a.addEventListener("focus", () => n(a)),
-          a.addEventListener("blur", () => n(a)),
-          a.addEventListener("keydown", (e) => {
-            var t;
-            ("Enter" !== e.key && " " !== e.key) ||
-              (e.preventDefault(),
-              (e = (e = a).closest(".menu-link")),
-              (t = e.getAttribute("aria-expanded")),
-              e.setAttribute("aria-expanded", "true" === t ? "false" : "true"));
+      e.forEach((e) => {
+        (e.addEventListener("focus", () => t(e)),
+          e.addEventListener("blur", () => t(e)),
+          e.addEventListener("keydown", (t) => {
+            var n;
+            ("Enter" !== t.key && " " !== t.key) ||
+              (t.preventDefault(),
+              (n = (t = (t = e).closest(".menu-link")).getAttribute(
+                "aria-expanded",
+              )),
+              t.setAttribute("aria-expanded", "true" === n ? "false" : "true"));
           }));
       }),
-      document.addEventListener("keydown", (e) => {
-        "Escape" === e.key && t.forEach((e) => n(e));
+      document.addEventListener("keydown", (n) => {
+        "Escape" === n.key && e.forEach((e) => t(e));
       }),
       window.addEventListener("orientationchange", () => {
         setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
       }));
   }),
   document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".theme-shop-thumbnail-wrap").forEach((t) => {
-      let a = t.querySelectorAll("a, span");
-      a.forEach((e) => {
-        (e.addEventListener("focus", () => {
-          t.querySelectorAll(
+    document.querySelectorAll(".theme-shop-thumbnail-wrap").forEach((e) => {
+      let t = e.querySelectorAll("a, span");
+      t.forEach((n) => {
+        (n.addEventListener("focus", () => {
+          e.querySelectorAll(
             ".gx-on-card-button, .gx-quick-view-trigger",
           ).forEach((e) => {
             ((e.style.opacity = "1"),
@@ -1207,9 +1211,9 @@ var themeGetParents = function (e, t) {
               (e.style.borderStyle = "none"));
           });
         }),
-          e.addEventListener("blur", () => {
-            Array.from(a).some((e) => e === document.activeElement) ||
-              t
+          n.addEventListener("blur", () => {
+            Array.from(t).some((e) => e === document.activeElement) ||
+              e
                 .querySelectorAll(".gx-on-card-button, .gx-quick-view-trigger")
                 .forEach((e) => {
                   ((e.style.opacity = ""), (e.style.visibility = ""));
@@ -1220,421 +1224,398 @@ var themeGetParents = function (e, t) {
   }));
 
 /* --- SOURCE: js/dom-ready.min.js --- */
-
 /*! This file is auto-generated */
-(function () {
+!(function () {
   "use strict";
-  var wp;
-  (wp ||= {}).domReady = (() => {
-    var o = Object.defineProperty;
-    var u = Object.getOwnPropertyDescriptor;
-    var a = Object.getOwnPropertyNames;
-    var i = Object.prototype.hasOwnProperty;
-    var f = (e, t) => {
-        for (var n in t) o(e, n, { get: t[n], enumerable: !0 });
-      },
-      m = (e, t, n, r) => {
-        if ((t && typeof t == "object") || typeof t == "function")
-          for (let d of a(t))
-            !i.call(e, d) &&
-              d !== n &&
-              o(e, d, {
-                get: () => t[d],
-                enumerable: !(r = u(t, d)) || r.enumerable,
-              });
-        return e;
-      };
-    var c = (e) => m(o({}, "__esModule", { value: !0 }), e);
-    var p = {};
-    f(p, { default: () => y });
-    function y(e) {
+  var e;
+  (((e ||= {}).domReady = (() => {
+    var e,
+      t = Object.defineProperty,
+      o = Object.getOwnPropertyDescriptor,
+      d = Object.getOwnPropertyNames,
+      r = Object.prototype.hasOwnProperty,
+      a = {};
+    function n(e) {
       if (!(typeof document > "u")) {
         if (
-          document.readyState === "complete" ||
-          document.readyState === "interactive"
+          "complete" === document.readyState ||
+          "interactive" === document.readyState
         )
           return void e();
         document.addEventListener("DOMContentLoaded", e);
       }
     }
-    return c(p);
-  })();
-  if (typeof wp.domReady === "object" && wp.domReady.default) {
-    wp.domReady = wp.domReady.default;
-  }
-  (window.wp ||= {}).domReady = wp.domReady;
+    return (
+      ((e, o) => {
+        for (var d in o) t(e, d, { get: o[d], enumerable: !0 });
+      })(a, { default: () => n }),
+      (e = a),
+      ((e, a, n, u) => {
+        if ((a && "object" == typeof a) || "function" == typeof a)
+          for (let c of d(a))
+            !r.call(e, c) &&
+              c !== n &&
+              t(e, c, {
+                get: () => a[c],
+                enumerable: !(u = o(a, c)) || u.enumerable,
+              });
+        return e;
+      })(t({}, "__esModule", { value: !0 }), e)
+    );
+  })()),
+    "object" == typeof e.domReady &&
+      e.domReady.default &&
+      (e.domReady = e.domReady.default),
+    ((window.wp ||= {}).domReady = e.domReady));
 })();
 
 /* --- SOURCE: js/hooks.min.js --- */
-
 /*! This file is auto-generated */
-(function () {
+!(function () {
   "use strict";
-  var wp;
-  (wp ||= {}).hooks = (() => {
-    var v = Object.defineProperty;
-    var S = Object.getOwnPropertyDescriptor;
-    var g = Object.getOwnPropertyNames;
-    var I = Object.prototype.hasOwnProperty;
-    var w = (e, n) => {
-        for (var s in n) v(e, s, { get: n[s], enumerable: !0 });
-      },
-      D = (e, n, s, r) => {
-        if ((n && typeof n == "object") || typeof n == "function")
-          for (let t of g(n))
-            !I.call(e, t) &&
-              t !== s &&
-              v(e, t, {
-                get: () => n[t],
-                enumerable: !(r = S(n, t)) || r.enumerable,
-              });
-        return e;
-      };
-    var T = (e) => D(v({}, "__esModule", { value: !0 }), e);
-    var le = {};
-    w(le, {
-      actions: () => ae,
-      addAction: () => J,
-      addFilter: () => K,
-      applyFilters: () => N,
-      applyFiltersAsync: () => ee,
-      createHooks: () => F,
-      currentAction: () => te,
-      currentFilter: () => re,
-      defaultHooks: () => b,
-      didAction: () => ie,
-      didFilter: () => se,
-      doAction: () => X,
-      doActionAsync: () => Y,
-      doingAction: () => ne,
-      doingFilter: () => oe,
-      filters: () => ce,
-      hasAction: () => P,
-      hasFilter: () => Q,
-      removeAction: () => L,
-      removeAllActions: () => U,
-      removeAllFilters: () => W,
-      removeFilter: () => M,
+  var e;
+  (((e ||= {}).hooks = (() => {
+    var e = Object.defineProperty,
+      t = Object.getOwnPropertyDescriptor,
+      r = Object.getOwnPropertyNames,
+      n = Object.prototype.hasOwnProperty,
+      i = {};
+    ((t, r) => {
+      for (var n in r) e(t, n, { get: r[n], enumerable: !0 });
+    })(i, {
+      actions: () => S,
+      addAction: () => v,
+      addFilter: () => F,
+      applyFilters: () => j,
+      applyFiltersAsync: () => T,
+      createHooks: () => m,
+      currentAction: () => z,
+      currentFilter: () => P,
+      defaultHooks: () => y,
+      didAction: () => H,
+      didFilter: () => R,
+      doAction: () => x,
+      doActionAsync: () => O,
+      doingAction: () => Z,
+      doingFilter: () => E,
+      filters: () => $,
+      hasAction: () => b,
+      hasFilter: () => k,
+      removeAction: () => _,
+      removeAllActions: () => I,
+      removeAllFilters: () => w,
+      removeFilter: () => g,
     });
-    function z(e) {
-      return typeof e != "string" || e === ""
+    var o = function (e) {
+      return "string" != typeof e || "" === e
         ? (console.error("The namespace must be a non-empty string."), !1)
-        : /^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(e)
-          ? !0
-          : (console.error(
+        : !!/^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(e) ||
+            (console.error(
               "The namespace can only contain numbers, letters, dashes, periods, underscores and slashes.",
             ),
             !1);
-    }
-    var m = z;
-    function E(e) {
-      return typeof e != "string" || e === ""
+    };
+    var s = function (e) {
+      return "string" != typeof e || "" === e
         ? (console.error("The hook name must be a non-empty string."), !1)
         : /^__/.test(e)
           ? (console.error("The hook name cannot begin with `__`."), !1)
-          : /^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(e)
-            ? !0
-            : (console.error(
-                "The hook name can only contain numbers, letters, dashes, periods and underscores.",
-              ),
-              !1);
-    }
-    var f = E;
-    function Z(e, n) {
-      return function (r, t, a, i = 10) {
-        let c = e[n];
-        if (!f(r) || !m(t)) return;
-        if (typeof a != "function") {
-          console.error("The hook callback must be a function.");
-          return;
-        }
-        if (typeof i != "number") {
-          console.error("If specified, the hook priority must be a number.");
-          return;
-        }
-        let l = { callback: a, priority: i, namespace: t };
-        if (c[r]) {
-          let o = c[r].handlers,
-            d;
-          for (d = o.length; d > 0 && !(i >= o[d - 1].priority); d--);
-          (d === o.length ? (o[d] = l) : o.splice(d, 0, l),
-            c.__current.forEach((h) => {
-              h.name === r && h.currentIndex >= d && h.currentIndex++;
+          : !!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(e) ||
+            (console.error(
+              "The hook name can only contain numbers, letters, dashes, periods and underscores.",
+            ),
+            !1);
+    };
+    var c = function (e, t) {
+      return function (r, n, i, c = 10) {
+        let l = e[t];
+        if (!s(r) || !o(n)) return;
+        if ("function" != typeof i)
+          return void console.error("The hook callback must be a function.");
+        if ("number" != typeof c)
+          return void console.error(
+            "If specified, the hook priority must be a number.",
+          );
+        let a = { callback: i, priority: c, namespace: n };
+        if (l[r]) {
+          let e,
+            t = l[r].handlers;
+          for (e = t.length; e > 0 && !(c >= t[e - 1].priority); e--);
+          (e === t.length ? (t[e] = a) : t.splice(e, 0, a),
+            l.__current.forEach((t) => {
+              t.name === r && t.currentIndex >= e && t.currentIndex++;
             }));
-        } else c[r] = { handlers: [l], runs: 0 };
-        r !== "hookAdded" && e.doAction("hookAdded", r, t, a, i);
+        } else l[r] = { handlers: [a], runs: 0 };
+        "hookAdded" !== r && e.doAction("hookAdded", r, n, i, c);
       };
-    }
-    var H = Z;
-    function C(e, n, s = !1) {
-      return function (t, a) {
-        let i = e[n];
-        if (!f(t) || (!s && !m(a))) return;
-        if (!i[t]) return 0;
-        let c = 0;
-        if (s)
-          ((c = i[t].handlers.length),
-            (i[t] = { runs: i[t].runs, handlers: [] }));
+    };
+    var l = function (e, t, r = !1) {
+      return function (n, i) {
+        let c = e[t];
+        if (!s(n) || (!r && !o(i))) return;
+        if (!c[n]) return 0;
+        let l = 0;
+        if (r)
+          ((l = c[n].handlers.length),
+            (c[n] = { runs: c[n].runs, handlers: [] }));
         else {
-          let l = i[t].handlers;
-          for (let o = l.length - 1; o >= 0; o--)
-            l[o].namespace === a &&
-              (l.splice(o, 1),
-              c++,
-              i.__current.forEach((d) => {
-                d.name === t && d.currentIndex >= o && d.currentIndex--;
+          let e = c[n].handlers;
+          for (let t = e.length - 1; t >= 0; t--)
+            e[t].namespace === i &&
+              (e.splice(t, 1),
+              l++,
+              c.__current.forEach((e) => {
+                e.name === n && e.currentIndex >= t && e.currentIndex--;
               }));
         }
-        return (t !== "hookRemoved" && e.doAction("hookRemoved", t, a), c);
+        return ("hookRemoved" !== n && e.doAction("hookRemoved", n, i), l);
       };
-    }
-    var p = C;
-    function O(e, n) {
-      return function (r, t) {
-        let a = e[n];
-        return typeof t < "u"
-          ? r in a && a[r].handlers.some((i) => i.namespace === t)
-          : r in a;
+    };
+    var a = function (e, t) {
+      return function (r, n) {
+        let i = e[t];
+        return typeof n < "u"
+          ? r in i && i[r].handlers.some((e) => e.namespace === n)
+          : r in i;
       };
-    }
-    var _ = O;
-    function j(e, n, s, r) {
-      return function (a, ...i) {
-        let c = e[n];
-        (c[a] || (c[a] = { handlers: [], runs: 0 }), c[a].runs++);
-        let l = c[a].handlers;
-        if (!l || !l.length) return s ? i[0] : void 0;
-        let o = { name: a, currentIndex: 0 };
-        async function d() {
-          try {
-            c.__current.add(o);
-            let u = s ? i[0] : void 0;
-            for (; o.currentIndex < l.length; )
-              ((u = await l[o.currentIndex].callback.apply(null, i)),
-                s && (i[0] = u),
-                o.currentIndex++);
-            return s ? u : void 0;
-          } finally {
-            c.__current.delete(o);
-          }
-        }
-        function h() {
-          try {
-            c.__current.add(o);
-            let u = s ? i[0] : void 0;
-            for (; o.currentIndex < l.length; )
-              ((u = l[o.currentIndex].callback.apply(null, i)),
-                s && (i[0] = u),
-                o.currentIndex++);
-            return s ? u : void 0;
-          } finally {
-            c.__current.delete(o);
-          }
-        }
-        return (r ? d : h)();
+    };
+    var u = function (e, t, r, n) {
+      return function (i, ...o) {
+        let s = e[t];
+        (s[i] || (s[i] = { handlers: [], runs: 0 }), s[i].runs++);
+        let c = s[i].handlers;
+        if (!c || !c.length) return r ? o[0] : void 0;
+        let l = { name: i, currentIndex: 0 };
+        return (
+          n
+            ? async function () {
+                try {
+                  s.__current.add(l);
+                  let e = r ? o[0] : void 0;
+                  for (; l.currentIndex < c.length; )
+                    ((e = await c[l.currentIndex].callback.apply(null, o)),
+                      r && (o[0] = e),
+                      l.currentIndex++);
+                  return r ? e : void 0;
+                } finally {
+                  s.__current.delete(l);
+                }
+              }
+            : function () {
+                try {
+                  s.__current.add(l);
+                  let e = r ? o[0] : void 0;
+                  for (; l.currentIndex < c.length; )
+                    ((e = c[l.currentIndex].callback.apply(null, o)),
+                      r && (o[0] = e),
+                      l.currentIndex++);
+                  return r ? e : void 0;
+                } finally {
+                  s.__current.delete(l);
+                }
+              }
+        )();
       };
-    }
-    var A = j;
-    function $(e, n) {
+    };
+    var d = function (e, t) {
       return function () {
-        let r = e[n];
+        let r = e[t];
         return Array.from(r.__current).at(-1)?.name ?? null;
       };
-    }
-    var y = $;
-    function V(e, n) {
-      return function (r) {
-        let t = e[n];
-        return typeof r > "u"
-          ? t.__current.size > 0
-          : Array.from(t.__current).some((a) => a.name === r);
-      };
-    }
-    var k = V;
-    function q(e, n) {
-      return function (r) {
-        let t = e[n];
-        if (f(r)) return t[r] && t[r].runs ? t[r].runs : 0;
-      };
-    }
-    var x = q;
-    var B = class {
-      actions;
-      filters;
-      addAction;
-      addFilter;
-      removeAction;
-      removeFilter;
-      hasAction;
-      hasFilter;
-      removeAllActions;
-      removeAllFilters;
-      doAction;
-      doActionAsync;
-      applyFilters;
-      applyFiltersAsync;
-      currentAction;
-      currentFilter;
-      doingAction;
-      doingFilter;
-      didAction;
-      didFilter;
-      constructor() {
-        ((this.actions = Object.create(null)),
-          (this.actions.__current = new Set()),
-          (this.filters = Object.create(null)),
-          (this.filters.__current = new Set()),
-          (this.addAction = H(this, "actions")),
-          (this.addFilter = H(this, "filters")),
-          (this.removeAction = p(this, "actions")),
-          (this.removeFilter = p(this, "filters")),
-          (this.hasAction = _(this, "actions")),
-          (this.hasFilter = _(this, "filters")),
-          (this.removeAllActions = p(this, "actions", !0)),
-          (this.removeAllFilters = p(this, "filters", !0)),
-          (this.doAction = A(this, "actions", !1, !1)),
-          (this.doActionAsync = A(this, "actions", !1, !0)),
-          (this.applyFilters = A(this, "filters", !0, !1)),
-          (this.applyFiltersAsync = A(this, "filters", !0, !0)),
-          (this.currentAction = y(this, "actions")),
-          (this.currentFilter = y(this, "filters")),
-          (this.doingAction = k(this, "actions")),
-          (this.doingFilter = k(this, "filters")),
-          (this.didAction = x(this, "actions")),
-          (this.didFilter = x(this, "filters")));
-      }
     };
-    function G() {
-      return new B();
-    }
-    var F = G;
-    var b = F(),
+    var h = function (e, t) {
+      return function (r) {
+        let n = e[t];
+        return typeof r > "u"
+          ? n.__current.size > 0
+          : Array.from(n.__current).some((e) => e.name === r);
+      };
+    };
+    var f = function (e, t) {
+        return function (r) {
+          let n = e[t];
+          if (s(r)) return n[r] && n[r].runs ? n[r].runs : 0;
+        };
+      },
+      A = class {
+        actions;
+        filters;
+        addAction;
+        addFilter;
+        removeAction;
+        removeFilter;
+        hasAction;
+        hasFilter;
+        removeAllActions;
+        removeAllFilters;
+        doAction;
+        doActionAsync;
+        applyFilters;
+        applyFiltersAsync;
+        currentAction;
+        currentFilter;
+        doingAction;
+        doingFilter;
+        didAction;
+        didFilter;
+        constructor() {
+          ((this.actions = Object.create(null)),
+            (this.actions.__current = new Set()),
+            (this.filters = Object.create(null)),
+            (this.filters.__current = new Set()),
+            (this.addAction = c(this, "actions")),
+            (this.addFilter = c(this, "filters")),
+            (this.removeAction = l(this, "actions")),
+            (this.removeFilter = l(this, "filters")),
+            (this.hasAction = a(this, "actions")),
+            (this.hasFilter = a(this, "filters")),
+            (this.removeAllActions = l(this, "actions", !0)),
+            (this.removeAllFilters = l(this, "filters", !0)),
+            (this.doAction = u(this, "actions", !1, !1)),
+            (this.doActionAsync = u(this, "actions", !1, !0)),
+            (this.applyFilters = u(this, "filters", !0, !1)),
+            (this.applyFiltersAsync = u(this, "filters", !0, !0)),
+            (this.currentAction = d(this, "actions")),
+            (this.currentFilter = d(this, "filters")),
+            (this.doingAction = h(this, "actions")),
+            (this.doingFilter = h(this, "filters")),
+            (this.didAction = f(this, "actions")),
+            (this.didFilter = f(this, "filters")));
+        }
+      };
+    var p,
+      m = function () {
+        return new A();
+      },
+      y = m(),
       {
-        addAction: J,
-        addFilter: K,
-        removeAction: L,
-        removeFilter: M,
-        hasAction: P,
-        hasFilter: Q,
-        removeAllActions: U,
-        removeAllFilters: W,
-        doAction: X,
-        doActionAsync: Y,
-        applyFilters: N,
-        applyFiltersAsync: ee,
-        currentAction: te,
-        currentFilter: re,
-        doingAction: ne,
-        doingFilter: oe,
-        didAction: ie,
-        didFilter: se,
-        actions: ae,
-        filters: ce,
-      } = b;
-    return T(le);
-  })();
-  (window.wp ||= {}).hooks = wp.hooks;
+        addAction: v,
+        addFilter: F,
+        removeAction: _,
+        removeFilter: g,
+        hasAction: b,
+        hasFilter: k,
+        removeAllActions: I,
+        removeAllFilters: w,
+        doAction: x,
+        doActionAsync: O,
+        applyFilters: j,
+        applyFiltersAsync: T,
+        currentAction: z,
+        currentFilter: P,
+        doingAction: Z,
+        doingFilter: E,
+        didAction: H,
+        didFilter: R,
+        actions: S,
+        filters: $,
+      } = y;
+    return (
+      (p = i),
+      ((i, o, s, c) => {
+        if ((o && "object" == typeof o) || "function" == typeof o)
+          for (let l of r(o))
+            !n.call(i, l) &&
+              l !== s &&
+              e(i, l, {
+                get: () => o[l],
+                enumerable: !(c = t(o, l)) || c.enumerable,
+              });
+        return i;
+      })(e({}, "__esModule", { value: !0 }), p)
+    );
+  })()),
+    ((window.wp ||= {}).hooks = e.hooks));
 })();
 
 /* --- SOURCE: js/i18n.min.js --- */
-
 /*! This file is auto-generated */
-(function () {
+!(function () {
   "use strict";
-  var wp;
-  (wp ||= {}).i18n = (() => {
-    var nt = Object.create;
-    var L = Object.defineProperty;
-    var at = Object.getOwnPropertyDescriptor;
-    var it = Object.getOwnPropertyNames;
-    var ut = Object.getPrototypeOf,
-      lt = Object.prototype.hasOwnProperty;
-    var ft = (t, r) => () => (
-        r || t((r = { exports: {} }).exports, r),
-        r.exports
-      ),
-      ot = (t, r) => {
-        for (var e in r) L(t, e, { get: r[e], enumerable: !0 });
-      },
-      O = (t, r, e, n) => {
-        if ((r && typeof r == "object") || typeof r == "function")
-          for (let u of it(r))
-            !lt.call(t, u) &&
-              u !== e &&
-              L(t, u, {
-                get: () => r[u],
-                enumerable: !(n = at(r, u)) || n.enumerable,
+  var t;
+  (((t ||= {}).i18n = (() => {
+    var t,
+      e,
+      r = Object.create,
+      n = Object.defineProperty,
+      a = Object.getOwnPropertyDescriptor,
+      i = Object.getOwnPropertyNames,
+      o = Object.getPrototypeOf,
+      l = Object.prototype.hasOwnProperty,
+      u = (t, e, r, o) => {
+        if ((e && "object" == typeof e) || "function" == typeof e)
+          for (let u of i(e))
+            !l.call(t, u) &&
+              u !== r &&
+              n(t, u, {
+                get: () => e[u],
+                enumerable: !(o = a(e, u)) || o.enumerable,
               });
         return t;
-      };
-    var st = (t, r, e) => (
-        (e = t != null ? nt(ut(t)) : {}),
-        O(
-          r || !t || !t.__esModule
-            ? L(e, "default", { value: t, enumerable: !0 })
-            : e,
-          t,
-        )
-      ),
-      pt = (t) => O(L({}, "__esModule", { value: !0 }), t);
-    var $ = ft((It, M) => {
-      M.exports = window.wp.hooks;
+      },
+      s =
+        ((t = (t, e) => {
+          e.exports = window.wp.hooks;
+        }),
+        () => (e || t((e = { exports: {} }).exports, e), e.exports)),
+      p = {};
+    ((t, e) => {
+      for (var r in e) n(t, r, { get: e[r], enumerable: !0 });
+    })(p, {
+      __: () => T,
+      _n: () => R,
+      _nx: () => $,
+      _x: () => M,
+      createI18n: () => w,
+      defaultI18n: () => D,
+      getLocaleData: () => P,
+      hasTranslation: () => K,
+      isRTL: () => I,
+      resetLocaleData: () => A,
+      setLocaleData: () => j,
+      sprintf: () => b,
+      subscribe: () => k,
     });
-    var yt = {};
-    ot(yt, {
-      __: () => Z,
-      _n: () => G,
-      _nx: () => B,
-      _x: () => q,
-      createI18n: () => R,
-      defaultI18n: () => H,
-      getLocaleData: () => j,
-      hasTranslation: () => Q,
-      isRTL: () => J,
-      resetLocaleData: () => U,
-      setLocaleData: () => z,
-      sprintf: () => P,
-      subscribe: () => X,
-    });
-    var ct =
-      /%(((\d+)\$)|(\(([$_a-zA-Z][$_a-zA-Z0-9]*)\)))?[ +0#-]*\d*(\.(\d+|\*))?(ll|[lhqL])?([cduxXefgsp%])/g;
-    function T(t, ...r) {
-      var e = 0;
-      return (
-        Array.isArray(r[0]) && (r = r[0]),
-        t.replace(ct, function () {
-          var n, u, l, o, f;
-          return (
-            (n = arguments[3]),
-            (u = arguments[5]),
-            (l = arguments[7]),
-            (o = arguments[9]),
-            o === "%"
-              ? "%"
-              : (l === "*" && ((l = r[e]), e++),
-                u === void 0
-                  ? (n === void 0 && (n = e + 1), e++, (f = r[n - 1]))
-                  : r[0] &&
-                    typeof r[0] == "object" &&
-                    r[0].hasOwnProperty(u) &&
-                    (f = r[0][u]),
-                o === "f"
-                  ? (f = parseFloat(f) || 0)
-                  : o === "d" && (f = parseInt(f) || 0),
-                l !== void 0 &&
-                  (o === "f"
-                    ? (f = f.toFixed(l))
-                    : o === "s" && (f = f.substr(0, l))),
-                f ?? "")
-          );
-        })
-      );
+    var c,
+      d,
+      f,
+      h,
+      _ =
+        /%(((\d+)\$)|(\(([$_a-zA-Z][$_a-zA-Z0-9]*)\)))?[ +0#-]*\d*(\.(\d+|\*))?(ll|[lhqL])?([cduxXefgsp%])/g;
+    function b(t, ...e) {
+      return (function (t, ...e) {
+        var r = 0;
+        return (
+          Array.isArray(e[0]) && (e = e[0]),
+          t.replace(_, function () {
+            var t, n, a, i, o;
+            return (
+              (t = arguments[3]),
+              (n = arguments[5]),
+              (a = arguments[7]),
+              "%" === (i = arguments[9])
+                ? "%"
+                : ("*" === a && ((a = e[r]), r++),
+                  void 0 === n
+                    ? (void 0 === t && (t = r + 1), r++, (o = e[t - 1]))
+                    : e[0] &&
+                      "object" == typeof e[0] &&
+                      e[0].hasOwnProperty(n) &&
+                      (o = e[0][n]),
+                  "f" === i
+                    ? (o = parseFloat(o) || 0)
+                    : "d" === i && (o = parseInt(o) || 0),
+                  void 0 !== a &&
+                    ("f" === i
+                      ? (o = o.toFixed(a))
+                      : "s" === i && (o = o.substr(0, a))),
+                  o ?? "")
+            );
+          })
+        );
+      })(t, ...e);
     }
-    function P(t, ...r) {
-      return T(t, ...r);
-    }
-    var D, I, h, N;
-    D = {
+    ((c = {
       "(": 9,
       "!": 8,
       "*": 7,
@@ -1652,315 +1633,292 @@ var themeGetParents = function (e, t) {
       "||": 2,
       "?": 1,
       "?:": 1,
-    };
-    I = ["(", "?"];
-    h = { ")": ["("], ":": ["?", "?:"] };
-    N = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
-    function b(t) {
-      for (var r = [], e = [], n, u, l, o; (n = t.match(N)); ) {
-        for (
-          u = n[0], l = t.substr(0, n.index).trim(), l && r.push(l);
-          (o = e.pop());
-        ) {
-          if (h[u]) {
-            if (h[u][0] === o) {
-              u = h[u][1] || u;
-              break;
-            }
-          } else if (I.indexOf(o) >= 0 || D[o] < D[u]) {
-            e.push(o);
-            break;
-          }
-          r.push(o);
-        }
-        (h[u] || e.push(u), (t = t.substr(n.index + u.length)));
-      }
-      return ((t = t.trim()), t && r.push(t), r.concat(e.reverse()));
-    }
-    var dt = {
+    }),
+      (d = ["(", "?"]),
+      (f = { ")": ["("], ":": ["?", "?:"] }),
+      (h = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/));
+    var x = {
       "!": function (t) {
         return !t;
       },
-      "*": function (t, r) {
-        return t * r;
+      "*": function (t, e) {
+        return t * e;
       },
-      "/": function (t, r) {
-        return t / r;
+      "/": function (t, e) {
+        return t / e;
       },
-      "%": function (t, r) {
-        return t % r;
+      "%": function (t, e) {
+        return t % e;
       },
-      "+": function (t, r) {
-        return t + r;
+      "+": function (t, e) {
+        return t + e;
       },
-      "-": function (t, r) {
-        return t - r;
+      "-": function (t, e) {
+        return t - e;
       },
-      "<": function (t, r) {
-        return t < r;
+      "<": function (t, e) {
+        return t < e;
       },
-      "<=": function (t, r) {
-        return t <= r;
+      "<=": function (t, e) {
+        return t <= e;
       },
-      ">": function (t, r) {
-        return t > r;
+      ">": function (t, e) {
+        return t > e;
       },
-      ">=": function (t, r) {
-        return t >= r;
+      ">=": function (t, e) {
+        return t >= e;
       },
-      "==": function (t, r) {
-        return t === r;
+      "==": function (t, e) {
+        return t === e;
       },
-      "!=": function (t, r) {
-        return t !== r;
+      "!=": function (t, e) {
+        return t !== e;
       },
-      "&&": function (t, r) {
-        return t && r;
+      "&&": function (t, e) {
+        return t && e;
       },
-      "||": function (t, r) {
-        return t || r;
+      "||": function (t, e) {
+        return t || e;
       },
-      "?:": function (t, r, e) {
-        if (t) throw r;
-        return e;
+      "?:": function (t, e, r) {
+        if (t) throw e;
+        return r;
       },
     };
-    function g(t, r) {
-      var e = [],
-        n,
-        u,
-        l,
-        o,
-        f,
-        _;
-      for (n = 0; n < t.length; n++) {
-        if (((f = t[n]), (o = dt[f]), o)) {
-          for (u = o.length, l = Array(u); u--; ) l[u] = e.pop();
-          try {
-            _ = o.apply(null, l);
-          } catch (v) {
-            return v;
+    function y(t) {
+      var e = (function (t) {
+        for (var e, r, n, a, i = [], o = []; (e = t.match(h)); ) {
+          for (
+            r = e[0], (n = t.substr(0, e.index).trim()) && i.push(n);
+            (a = o.pop());
+          ) {
+            if (f[r]) {
+              if (f[r][0] === a) {
+                r = f[r][1] || r;
+                break;
+              }
+            } else if (d.indexOf(a) >= 0 || c[a] < c[r]) {
+              o.push(a);
+              break;
+            }
+            i.push(a);
           }
-        } else r.hasOwnProperty(f) ? (_ = r[f]) : (_ = +f);
-        e.push(_);
-      }
-      return e[0];
-    }
-    function A(t) {
-      var r = b(t);
-      return function (e) {
-        return g(r, e);
+          (f[r] || o.push(r), (t = t.substr(e.index + r.length)));
+        }
+        return ((t = t.trim()) && i.push(t), i.concat(o.reverse()));
+      })(t);
+      return function (t) {
+        return (function (t, e) {
+          var r,
+            n,
+            a,
+            i,
+            o,
+            l,
+            u = [];
+          for (r = 0; r < t.length; r++) {
+            if (((o = t[r]), (i = x[o]))) {
+              for (n = i.length, a = Array(n); n--; ) a[n] = u.pop();
+              try {
+                l = i.apply(null, a);
+              } catch (t) {
+                return t;
+              }
+            } else l = e.hasOwnProperty(o) ? e[o] : +o;
+            u.push(l);
+          }
+          return u[0];
+        })(e, t);
       };
     }
-    function E(t) {
-      var r = A(t);
-      return function (e) {
-        return +r({ n: e });
-      };
+    var v = { contextDelimiter: "", onMissingKey: null };
+    function g(t, e) {
+      var r;
+      for (r in ((this.data = t),
+      (this.pluralForms = {}),
+      (this.options = {}),
+      v))
+        this.options[r] = void 0 !== e && r in e ? e[r] : v[r];
     }
-    var S = { contextDelimiter: "", onMissingKey: null };
-    function _t(t) {
-      var r, e, n;
-      for (r = t.split(";"), e = 0; e < r.length; e++)
-        if (((n = r[e].trim()), n.indexOf("plural=") === 0)) return n.substr(7);
-    }
-    function x(t, r) {
-      var e;
-      ((this.data = t), (this.pluralForms = {}), (this.options = {}));
-      for (e in S) this.options[e] = r !== void 0 && e in r ? r[e] : S[e];
-    }
-    x.prototype.getPluralForm = function (t, r) {
-      var e = this.pluralForms[t],
+    ((g.prototype.getPluralForm = function (t, e) {
+      var r,
         n,
-        u,
-        l;
+        a,
+        i = this.pluralForms[t];
       return (
-        e ||
-          ((n = this.data[t][""]),
-          (l = n["Plural-Forms"] || n["plural-forms"] || n.plural_forms),
-          typeof l != "function" &&
-            ((u = _t(n["Plural-Forms"] || n["plural-forms"] || n.plural_forms)),
-            (l = E(u))),
-          (e = this.pluralForms[t] = l)),
-        e(r)
+        i ||
+          ("function" !=
+            typeof (a =
+              (r = this.data[t][""])["Plural-Forms"] ||
+              r["plural-forms"] ||
+              r.plural_forms) &&
+            ((n = (function (t) {
+              var e, r, n;
+              for (e = t.split(";"), r = 0; r < e.length; r++)
+                if (0 === (n = e[r].trim()).indexOf("plural="))
+                  return n.substr(7);
+            })(r["Plural-Forms"] || r["plural-forms"] || r.plural_forms)),
+            (a = (function (t) {
+              var e = y(t);
+              return function (t) {
+                return +e({ n: t });
+              };
+            })(n))),
+          (i = this.pluralForms[t] = a)),
+        i(e)
       );
-    };
-    x.prototype.dcnpgettext = function (t, r, e, n, u) {
-      var l, o, f;
-      return (
-        u === void 0 ? (l = 0) : (l = this.getPluralForm(t, u)),
-        (o = e),
-        r && (o = r + this.options.contextDelimiter + e),
-        (f = this.data[t][o]),
-        f && f[l]
-          ? f[l]
-          : (this.options.onMissingKey && this.options.onMissingKey(e, t),
-            l === 0 ? e : n)
-      );
-    };
-    var K = {
-        "": {
-          plural_forms(t) {
-            return t === 1 ? 0 : 1;
+    }),
+      (g.prototype.dcnpgettext = function (t, e, r, n, a) {
+        var i, o, l;
+        return (
+          (i = void 0 === a ? 0 : this.getPluralForm(t, a)),
+          (o = r),
+          e && (o = e + this.options.contextDelimiter + r),
+          (l = this.data[t][o]) && l[i]
+            ? l[i]
+            : (this.options.onMissingKey && this.options.onMissingKey(r, t),
+              0 === i ? r : n)
+        );
+      }));
+    var m = { plural_forms: (t) => (1 === t ? 0 : 1) },
+      F = /^i18n\.(n?gettext|has_translation)(_|$)/,
+      w = (t, e, r) => {
+        let n = new g({}),
+          a = new Set(),
+          i = () => {
+            a.forEach((t) => t());
           },
-        },
-      },
-      vt = /^i18n\.(n?gettext|has_translation)(_|$)/,
-      R = (t, r, e) => {
-        let n = new x({}),
-          u = new Set(),
-          l = () => {
-            u.forEach((a) => a());
+          o = (t, e = "default") => {
+            ((n.data[e] = { ...n.data[e], ...t }),
+              (n.data[e][""] = { ...m, ...n.data[e]?.[""] }),
+              delete n.pluralForms[e]);
           },
-          o = (a) => (u.add(a), () => u.delete(a)),
-          f = (a = "default") => n.data[a],
-          _ = (a, i = "default") => {
-            ((n.data[i] = { ...n.data[i], ...a }),
-              (n.data[i][""] = { ...K[""], ...n.data[i]?.[""] }),
-              delete n.pluralForms[i]);
+          l = (t, e) => {
+            (o(t, e), i());
           },
-          v = (a, i) => {
-            (_(a, i), l());
-          },
-          V = (a, i = "default") => {
-            ((n.data[i] = {
-              ...n.data[i],
-              ...a,
-              "": { ...K[""], ...n.data[i]?.[""], ...a?.[""] },
-            }),
-              delete n.pluralForms[i],
-              l());
-          },
-          W = (a, i) => {
-            ((n.data = {}), (n.pluralForms = {}), v(a, i));
-          },
-          m = (a = "default", i, s, c, d) => (
-            n.data[a] || _(void 0, a),
-            n.dcnpgettext(a, i, s, c, d)
+          u = (t = "default", e, r, a, i) => (
+            n.data[t] || o(void 0, t),
+            n.dcnpgettext(t, e, r, a, i)
           ),
-          y = (a) => a || "default",
-          Y = (a, i) => {
-            let s = m(i, void 0, a);
-            return e
-              ? ((s = e.applyFilters("i18n.gettext", s, a, i)),
-                e.applyFilters("i18n.gettext_" + y(i), s, a, i))
-              : s;
-          },
-          w = (a, i, s) => {
-            let c = m(s, i, a);
-            return e
-              ? ((c = e.applyFilters("i18n.gettext_with_context", c, a, i, s)),
-                e.applyFilters("i18n.gettext_with_context_" + y(s), c, a, i, s))
-              : c;
-          },
-          k = (a, i, s, c) => {
-            let d = m(c, void 0, a, i, s);
-            return e
-              ? ((d = e.applyFilters("i18n.ngettext", d, a, i, s, c)),
-                e.applyFilters("i18n.ngettext_" + y(c), d, a, i, s, c))
-              : d;
-          },
-          tt = (a, i, s, c, d) => {
-            let F = m(d, c, a, i, s);
-            return e
-              ? ((F = e.applyFilters(
-                  "i18n.ngettext_with_context",
-                  F,
-                  a,
-                  i,
-                  s,
-                  c,
-                  d,
-                )),
-                e.applyFilters(
-                  "i18n.ngettext_with_context_" + y(d),
-                  F,
-                  a,
-                  i,
-                  s,
-                  c,
-                  d,
-                ))
-              : F;
-          },
-          rt = () => w("ltr", "text direction") === "rtl",
-          et = (a, i, s) => {
-            let c = i ? i + "" + a : a,
-              d = !!n.data?.[s ?? "default"]?.[c];
-            return (
-              e &&
-                ((d = e.applyFilters("i18n.has_translation", d, a, i, s)),
-                (d = e.applyFilters(
-                  "i18n.has_translation_" + y(s),
-                  d,
-                  a,
-                  i,
-                  s,
-                ))),
-              d
-            );
+          s = (t) => t || "default",
+          p = (t, e, n) => {
+            let a = u(n, e, t);
+            return r
+              ? ((a = r.applyFilters("i18n.gettext_with_context", a, t, e, n)),
+                r.applyFilters("i18n.gettext_with_context_" + s(n), a, t, e, n))
+              : a;
           };
-        if ((t && v(t, r), e)) {
-          let a = (i) => {
-            vt.test(i) && l();
+        if ((t && l(t, e), r)) {
+          let t = (t) => {
+            F.test(t) && i();
           };
-          (e.addAction("hookAdded", "core/i18n", a),
-            e.addAction("hookRemoved", "core/i18n", a));
+          (r.addAction("hookAdded", "core/i18n", t),
+            r.addAction("hookRemoved", "core/i18n", t));
         }
         return {
-          getLocaleData: f,
-          setLocaleData: v,
-          addLocaleData: V,
-          resetLocaleData: W,
-          subscribe: o,
-          __: Y,
-          _x: w,
-          _n: k,
-          _nx: tt,
-          isRTL: rt,
-          hasTranslation: et,
+          getLocaleData: (t = "default") => n.data[t],
+          setLocaleData: l,
+          addLocaleData: (t, e = "default") => {
+            ((n.data[e] = {
+              ...n.data[e],
+              ...t,
+              "": { ...m, ...n.data[e]?.[""], ...t?.[""] },
+            }),
+              delete n.pluralForms[e],
+              i());
+          },
+          resetLocaleData: (t, e) => {
+            ((n.data = {}), (n.pluralForms = {}), l(t, e));
+          },
+          subscribe: (t) => (a.add(t), () => a.delete(t)),
+          __: (t, e) => {
+            let n = u(e, void 0, t);
+            return r
+              ? ((n = r.applyFilters("i18n.gettext", n, t, e)),
+                r.applyFilters("i18n.gettext_" + s(e), n, t, e))
+              : n;
+          },
+          _x: p,
+          _n: (t, e, n, a) => {
+            let i = u(a, void 0, t, e, n);
+            return r
+              ? ((i = r.applyFilters("i18n.ngettext", i, t, e, n, a)),
+                r.applyFilters("i18n.ngettext_" + s(a), i, t, e, n, a))
+              : i;
+          },
+          _nx: (t, e, n, a, i) => {
+            let o = u(i, a, t, e, n);
+            return r
+              ? ((o = r.applyFilters(
+                  "i18n.ngettext_with_context",
+                  o,
+                  t,
+                  e,
+                  n,
+                  a,
+                  i,
+                )),
+                r.applyFilters(
+                  "i18n.ngettext_with_context_" + s(i),
+                  o,
+                  t,
+                  e,
+                  n,
+                  a,
+                  i,
+                ))
+              : o;
+          },
+          isRTL: () => "rtl" === p("ltr", "text direction"),
+          hasTranslation: (t, e, a) => {
+            let i = e ? e + "" + t : t,
+              o = !!n.data?.[a ?? "default"]?.[i];
+            return (
+              r &&
+                ((o = r.applyFilters("i18n.has_translation", o, t, e, a)),
+                (o = r.applyFilters(
+                  "i18n.has_translation_" + s(a),
+                  o,
+                  t,
+                  e,
+                  a,
+                ))),
+              o
+            );
+          },
         };
-      };
-    var C = st($(), 1);
-    var p = R(void 0, void 0, C.defaultHooks),
-      H = p,
-      j = p.getLocaleData.bind(p),
-      z = p.setLocaleData.bind(p),
-      U = p.resetLocaleData.bind(p),
-      X = p.subscribe.bind(p),
-      Z = p.__.bind(p),
-      q = p._x.bind(p),
-      G = p._n.bind(p),
-      B = p._nx.bind(p),
-      J = p.isRTL.bind(p),
-      Q = p.hasTranslation.bind(p);
-    return pt(yt);
-  })();
-  (window.wp ||= {}).i18n = wp.i18n;
+      },
+      L = ((t, e, a) => (
+        (a = null != t ? r(o(t)) : {}),
+        u(
+          !e && t && t.__esModule
+            ? a
+            : n(a, "default", { value: t, enumerable: !0 }),
+          t,
+        )
+      ))(s(), 1),
+      O = w(void 0, void 0, L.defaultHooks),
+      D = O,
+      P = O.getLocaleData.bind(O),
+      j = O.setLocaleData.bind(O),
+      A = O.resetLocaleData.bind(O),
+      k = O.subscribe.bind(O),
+      T = O.__.bind(O),
+      M = O._x.bind(O),
+      R = O._n.bind(O),
+      $ = O._nx.bind(O),
+      I = O.isRTL.bind(O),
+      K = O.hasTranslation.bind(O);
+    return ((t) => u(n({}, "__esModule", { value: !0 }), t))(p);
+  })()),
+    ((window.wp ||= {}).i18n = t.i18n));
 })();
 
-/* --- SOURCE: inline script --- */
-
+/* --- SOURCE: inline script (i18n locale data) --- */
 wp.i18n.setLocaleData({ "text direction\u0004ltr": ["ltr"] });
 //# sourceURL=fw-i18n-js-after
 
-/* --- SOURCE: js/nav-toggle.js --- */
-
-(function () {
-  var toggle = document.getElementById("nav-toggle");
-  var links = document.getElementById("nav-links");
-  if (!toggle || !links) return;
-  toggle.addEventListener("click", function () {
-    var open = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!open));
-    links.classList.toggle("nav-open");
-  });
-  /* Closing the menu after a link is clicked is handled once, via a single
-	   delegated listener, in portfolio-enhancements.js below. */
-})();
-
 /* --- SOURCE: js/portfolio-enhancements.js --- */
-
 (function () {
   "use strict";
 
@@ -2099,18 +2057,6 @@ wp.i18n.setLocaleData({ "text direction\u0004ltr": ["ltr"] });
       }
     });
   });
-
-  /* Close mobile menu after selecting a link */
-  var toggle = document.getElementById("nav-toggle");
-  var links = document.getElementById("nav-links");
-  if (toggle && links) {
-    links.addEventListener("click", function (event) {
-      if (event.target.tagName === "A") {
-        toggle.setAttribute("aria-expanded", "false");
-        links.classList.remove("nav-open");
-      }
-    });
-  }
 
   /* Add subtle external-link safety without changing existing URLs */
   document.querySelectorAll('a[target="_blank"]').forEach(function (link) {
