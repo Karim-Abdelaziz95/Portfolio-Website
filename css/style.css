@@ -543,4 +543,12 @@ footer {
     margin-top: -20px;
     font-size: 15px;
   }
+  
+  #scroll {
+  display: none;
+  }
+  
+  #about {
+    margin-top: -20px;
+  }
 }
