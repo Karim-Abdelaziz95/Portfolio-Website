@@ -1,4 +1,4 @@
-# 𝕂𝕒𝕣𝕚𝕞 𝔸𝕓𝕕𝕖𝕝𝕒𝕫𝕚𝕫 𝔽𝕒𝕣𝕠𝕦𝕜 — Portfolio
+# Karim Abdelaziz Farouk — Portfolio
 
 ## I build digital experiences that feel as good as they work.
 
