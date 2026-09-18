@@ -444,9 +444,11 @@ footer {
 
 @media (max-width: 925px) {
   #my-pic {
-    padding: 25px;
+    padding: 15px;
+    border-radius: 40px;
+    margin: var(--spaceNone) auto;
   }
-  
+
   #main-heading {
     font-size: 25px;
   }
@@ -509,3 +511,4 @@ footer {
     overflow: hidden;
   }
 }
+
