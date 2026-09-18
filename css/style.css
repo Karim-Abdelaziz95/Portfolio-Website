@@ -331,18 +331,21 @@ header {
 }
 
 #email-link {
-  text-decoration: underline;
   color: var(--navy);
 }
 
 #email-container {
   margin-bottom: 20px;
+  font-size: 20px;
+  margin-top: 5px;
 }
 
 #contact-social-links {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  margin-top: -20px;
+  font-size: 20px;
 }
 
 footer {
@@ -368,7 +371,7 @@ footer {
 }
 
 #copyright {
-  font-size: 15px;
+  font-size: 17px;
   color: var(--off-white);
 }
 
@@ -461,7 +464,7 @@ footer {
 
   #my-pic {
     padding: 10px;
-    border-radius: 40px;
+    border-radius: 35px;
     margin: var(--spaceNone) auto;
   }
 
@@ -521,14 +524,23 @@ footer {
 
   #projects iframe {
     width: 100%;
-    height: 525px;
+    height: 350px;
     border: none;
     border-radius: 20px;
     overflow: hidden;
   }
 
+  #email-container {
+    margin-bottom: 20px;
+    font-size: 15px;
+    margin-top: 5px;
+  }
+
   #contact-social-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
     margin-top: -20px;
+    font-size: 15px;
   }
 }
-
