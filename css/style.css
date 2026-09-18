@@ -419,7 +419,7 @@ footer {
   margin-top: 50px;
 }
 
-@media (max-width: 926px) and (max-width: 2000px) {
+@media (max-width: 1024px) {
   main {
     padding: 30px 40px;
   }
@@ -459,6 +459,117 @@ footer {
 }
 
 @media (max-width: 925px) {
+  #contact-h3 {
+    font-size: 16px;
+    padding-bottom: 5px;
+  }
+
+  h3 {
+    color: var(--orange);
+    font-size: 20px;
+  }
+
+  .services-list dt {
+    color: var(--orange);
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+
+  #my-pic {
+    padding: 10px;
+    border-radius: 35px;
+    margin: var(--spaceNone) auto;
+    margin-bottom: -20px;
+  }
+
+  #main-heading {
+    font-size: 25px;
+  }
+
+  #main-p {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 18px;
+  }
+
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .btn-link {
+    font-size: 17px;
+    padding: 8px 16px;
+  }
+
+  .menu-toggle {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--navy);
+    padding: 16px 0;
+  }
+
+  .nav-list.open {
+    display: flex;
+  }
+
+  #footer-link-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #projects iframe {
+    width: 100%;
+    height: 325px;
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  #email-container {
+    margin-bottom: 20px;
+    font-size: 15px;
+    margin-top: 5px;
+  }
+
+  #contact-social-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: -20px;
+    font-size: 15px;
+  }
+
+  #about {
+    margin-top: -20px;
+  }
+
+  .services-list dd {
+    font-size: 16px;
+  }
+
+  #projects #game-iframe {
+    width: 100%;
+    height: 300px;
+  }
+}
+
+@media (max-width: 640px) {
   #contact-h3 {
     font-size: 19px;
     padding-bottom: 5px;
@@ -500,9 +611,15 @@ footer {
     text-align: center;
   }
 
+  .btn {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .btn-link {
     font-size: 15px;
     padding: 8px 16px;
+    justify-content: center;
   }
 
   .menu-toggle {
@@ -566,5 +683,24 @@ footer {
   #projects #game-iframe {
     width: 100%;
     height: 250px;
+  }
+}
+
+@media (max-width: 380px) {
+  main {
+    padding: 24px 18px;
+  }
+
+  #main-heading {
+    font-size: 26px;
+  }
+
+  .btn {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-link {
+    justify-content: center;
   }
 }
