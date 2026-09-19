@@ -194,12 +194,16 @@ header {
   margin-top: -25px;
 }
 
+.about-section p {
+  margin-bottom: 50px;
+}
+
 #about-text {
   margin-bottom: 15px;
 }
 
 #about-p {
-  margin-bottom: 50px;
+  margin-bottom: 15px;
 }
 
 .btn {

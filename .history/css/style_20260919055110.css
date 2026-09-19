@@ -194,12 +194,16 @@ header {
   margin-top: -25px;
 }
 
+.about-section p {
+  gap: 20px;
+}
+
 #about-text {
   margin-bottom: 15px;
 }
 
 #about-p {
-  margin-bottom: 50px;
+  margin-bottom: 15px;
 }
 
 .btn {
@@ -262,6 +266,7 @@ header {
   list-style: none;
   padding: 0;
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 .skills-list li {
