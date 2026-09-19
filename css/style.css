@@ -8,6 +8,15 @@
   --body-text: #605a5a;
   --fontBold: 700;
   --spaceNone: 0;
+  --html: #e34f26;
+  --css: #1572b6;
+  --javascript: #f7df1e;
+  --react: #61dafb;
+  --next: #000000;
+  --tailwind: #06b6d4;
+  --bootstrap: #7952b3;
+  --typescript: #3178c6;
+  --node: #339933;
 }
 
 html {
@@ -274,10 +283,45 @@ header {
 }
 
 .skills-list li:hover {
-  background-color: var(--orange);
   color: var(--off-white);
   padding: 5px 10px;
   font-size: 20px;
+}
+
+.skills-list #html5:hover {
+  background-color: var(--html);
+}
+
+.skills-list #css3:hover {
+  background-color: var(--css);
+}
+
+.skills-list #js:hover {
+  background-color: var(--javascript);
+}
+
+.skills-list #ts:hover {
+  background-color: var(--typescript);
+}
+
+.skills-list #node:hover {
+  background-color: var(--node);
+}
+
+.skills-list #react:hover {
+  background-color: var(--react);
+}
+
+.skills-list #next:hover {
+  background-color: var(--next);
+}
+
+.skills-list #tailwind:hover {
+  background-color: var(--tailwind);
+}
+
+.skills-list #bootstrap:hover {
+  background-color: var(--bootstrap);
 }
 
 .services-list {
