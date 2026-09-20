@@ -350,13 +350,13 @@ header {
 }
 
 /* ==================== PROJECTS SECTION ==================== */
-.projects-list p{
+.projects-list p {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 #projects-p {
   margin-top: -25px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 .projects-list {
   list-style: none;
@@ -415,7 +415,7 @@ header {
 
 /* ==================== CONTACT SECTION ==================== */
 #contact {
-  margin-top: -20px;
+  margin-top: -25px;
 }
 
 .section-intro {
@@ -431,13 +431,13 @@ header {
   font-weight: 500;
 }
 
- #contact h2 {
-    font-size: 37px;
-  }
-  
- #contact h3 {
-    font-size: 24px;
-  }
+#contact h2 {
+  font-size: 37px;
+}
+
+#contact h3 {
+  font-size: 24px;
+}
 
 .contact-grid {
   display: grid;
@@ -930,11 +930,11 @@ footer {
   }
 
   #contact h3 {
-    font-size: 19px;
+    font-size: 18px;
   }
 
   #contact {
-    margin-top: -30px;
+    margin-top: -35px;
   }
 
   .section-intro {
