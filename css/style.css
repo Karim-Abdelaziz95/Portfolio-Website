@@ -1,5 +1,6 @@
 /* © Karim Abdelaziz Farouk */
 
+/* ==================== DESIGN TOKENS / VARIABLES ==================== */
 :root {
   --navy: #0b1e3d;
   --orange: #ea580c;
@@ -8,6 +9,9 @@
   --body-text: #605a5a;
   --fontBold: 700;
   --spaceNone: 0;
+  --shadow-md: 0 8px 24px rgba(11, 30, 61, 0.12);
+  --shadow-lg: 0 20px 45px rgba(11, 30, 61, 0.22);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --html: #e34f26;
   --css: #1572b6;
   --javascript: #f7df1e;
@@ -19,38 +23,40 @@
   --node: #339933;
 }
 
-.fa-html5{
-color: var(--html);
+/* ==================== TECHNOLOGY BRAND COLORS ==================== */
+.fa-html5 {
+  color: var(--html);
 }
 
-.fa-css3-alt{
-color: var(--css);
+.fa-css3-alt {
+  color: var(--css);
 }
 
-.fa-js{
-color: var(--javascript);
+.fa-js {
+  color: var(--javascript);
 }
 
-.devicon-typescript-plain{
-color: var(--typescript);
+.devicon-typescript-plain {
+  color: var(--typescript);
 }
 
-.fa-node{
-color: var(--node);
+.fa-node {
+  color: var(--node);
 }
 
-.fa-react{
-color: var(--react);
+.fa-react {
+  color: var(--react);
 }
 
-.devicon-tailwindcss-original{
-color: var(--tailwind);
+.devicon-tailwindcss-original {
+  color: var(--tailwind);
 }
 
-.fa-bootstrap{
-color: var(--bootstrap);
+.fa-bootstrap {
+  color: var(--bootstrap);
 }
 
+/* ==================== GLOBAL / TYPOGRAPHY ==================== */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
@@ -114,6 +120,7 @@ a:focus-visible {
   font-weight: var(--fontBold);
 }
 
+/* ==================== LAYOUT / HEADER ==================== */
 main {
   padding: 30px 100px;
   max-width: 1400px;
@@ -194,6 +201,7 @@ header {
   transform: translateY(-8px) rotate(-45deg);
 }
 
+/* ==================== HERO SECTION ==================== */
 .hero {
   display: flex;
   align-items: center;
@@ -209,7 +217,7 @@ header {
 }
 
 #main-heading {
-  font-size: 65px;
+  font-size: 70px;
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -0.05em;
@@ -232,7 +240,7 @@ header {
 
 #main-p {
   font-size: 25px;
-  margin-top: -25px;
+  margin-top: -15px;
 }
 
 #about-text {
@@ -296,6 +304,11 @@ header {
   font-size: 17px;
 }
 
+#name{
+color: var(--orange);
+}
+
+/* ==================== SKILLS SECTION ==================== */
 .skills-list {
   display: flex;
   flex-wrap: wrap;
@@ -314,6 +327,7 @@ header {
   font-weight: 600;
 }
 
+/* ==================== SERVICES SECTION ==================== */
 .services-list {
   margin-bottom: 50px;
 }
@@ -331,6 +345,7 @@ header {
   font-size: 20px;
 }
 
+/* ==================== PROJECTS SECTION ==================== */
 .projects-list {
   list-style: none;
   padding: 0;
@@ -370,10 +385,7 @@ header {
 }
 
 .projects-list iframe {
-  border: 1px solid #ddd;
-  border-radius: 10px;
   margin: 15px 0;
-  overflow: hidden;
 }
 
 .project-link {
@@ -389,24 +401,203 @@ header {
   font-weight: 600;
 }
 
-#email-link {
+/* ==================== CONTACT SECTION ==================== */
+#contact {
+  margin-top: 90px;
+}
+
+.section-intro {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 50px;
+}
+
+.section-intro h2 {
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  color: var(--body-text);
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 50px;
+  align-items: start;
+}
+
+.contact-lede {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.contact-methods {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background-color: #f6f8fb;
+  border: 1px solid rgba(11, 30, 61, 0.08);
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    background-color 0.25s var(--ease);
+}
+
+.contact-method:hover,
+.contact-method:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  background-color: #ffffff;
+  text-decoration: none;
+}
+
+.contact-method-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--navy);
+  color: var(--off-white);
+  font-size: 17px;
+  transition: background-color 0.25s var(--ease);
+}
+
+.contact-method:hover .contact-method-icon,
+.contact-method:focus-visible .contact-method-icon {
+  background-color: var(--orange);
+}
+
+.contact-method-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.contact-method-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--orange);
+}
+
+.contact-method-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  overflow-wrap: anywhere;
+}
+
+.contact-form-wrapper {
+  background-color: var(--navy);
+  border-radius: 25px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.form-group {
+  margin-bottom: 1.4rem;
+  position: relative;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 1.8rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--off-white);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  color: var(--off-white);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition:
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(240, 248, 255, 0.45);
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+.form-group select option {
+  color: #000000;
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.25);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-submit {
+  width: 100%;
+  justify-content: center;
+  background-color: var(--orange);
+  color: var(--off-white);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-submit:hover,
+.btn-submit:focus-visible {
+  background-color: var(--off-white);
   color: var(--navy);
 }
 
-#email-container {
-  margin-bottom: 20px;
-  font-size: 20px;
-  margin-top: 5px;
-}
-
-#contact-social-links {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: -20px;
-  font-size: 20px;
-}
-
+/* ==================== FOOTER ==================== */
 footer {
   padding: 20px 30px;
   background-color: var(--navy);
@@ -455,10 +646,34 @@ footer {
   margin-bottom: 25px;
 }
 
-#contact {
-  margin-top: 50px;
+/* ==================== SCROLL REVEAL / ACCESSIBILITY ==================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
 }
 
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal,
+  .contact-method,
+  .btn-submit {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ==================== RESPONSIVE DESIGN: TABLET / SMALL DESKTOP ==================== */
 @media (max-width: 1024px) {
   main {
     padding: 30px 40px;
@@ -498,12 +713,8 @@ footer {
   }
 }
 
+/* ==================== RESPONSIVE DESIGN: TABLET / MOBILE ==================== */
 @media (max-width: 925px) {
-  #contact-h3 {
-    font-size: 16px;
-    padding-bottom: 5px;
-  }
-
   h3 {
     color: var(--orange);
     font-size: 20px;
@@ -524,7 +735,7 @@ footer {
   }
 
   #main-heading {
-    font-size: 25px;
+    font-size: 30px;
   }
 
   #main-p {
@@ -545,6 +756,7 @@ footer {
     padding: 8px 16px;
   }
 
+  /* Mobile navigation */
   .menu-toggle {
     display: flex;
     margin-left: auto;
@@ -581,20 +793,6 @@ footer {
     overflow: hidden;
   }
 
-  #email-container {
-    margin-bottom: 20px;
-    font-size: 15px;
-    margin-top: 5px;
-  }
-
-  #contact-social-links {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: -20px;
-    font-size: 15px;
-  }
-
   #about {
     margin-top: -20px;
   }
@@ -607,14 +805,27 @@ footer {
     width: 100%;
     height: 300px;
   }
-}
 
-@media (max-width: 640px) {
-  #contact-h3 {
-    font-size: 19px;
-    padding-bottom: 5px;
+  #contact {
+    margin-top: 70px;
   }
 
+  .section-intro {
+    margin-bottom: 40px;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contact-form-wrapper {
+    padding: 2rem;
+  }
+}
+
+/* ==================== RESPONSIVE DESIGN: MOBILE ==================== */
+@media (max-width: 640px) {
   h3 {
     color: var(--orange);
     font-size: 20px;
@@ -635,11 +846,12 @@ footer {
   }
 
   #main-heading {
-    font-size: 25px;
+    font-size: 30px;
   }
 
   #main-p {
     font-size: 18px;
+    margin-top: 20px
   }
 
   p {
@@ -662,6 +874,7 @@ footer {
     justify-content: center;
   }
 
+  /* Mobile navigation */
   .menu-toggle {
     display: flex;
     margin-left: auto;
@@ -698,20 +911,6 @@ footer {
     overflow: hidden;
   }
 
-  #email-container {
-    margin-bottom: 20px;
-    font-size: 15px;
-    margin-top: 5px;
-  }
-
-  #contact-social-links {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: -20px;
-    font-size: 15px;
-  }
-
   #about {
     margin-top: -20px;
   }
@@ -724,8 +923,45 @@ footer {
     width: 100%;
     height: 250px;
   }
+
+  .reveal .section-text {
+    font-size: 20px;
+  }
+
+  #contact {
+    margin-top: 55px;
+  }
+
+  .section-intro {
+    margin-bottom: 32px;
+  }
+
+  .contact-lede {
+    font-size: 16px;
+  }
+
+  .contact-method {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .contact-method-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+  }
+
+  .contact-method-value {
+    font-size: 13px;
+  }
+
+  .contact-form-wrapper {
+    padding: 2rem;
+    border-radius: 20px;
+  }
 }
 
+/* ==================== RESPONSIVE DESIGN: VERY SMALL SCREENS ==================== */
 @media (max-width: 380px) {
   main {
     padding: 24px 18px;

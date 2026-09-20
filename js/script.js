@@ -1,6 +1,37 @@
 // © Karim Abdelaziz Farouk
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  // ==================== CONTACT SCROLL REVEAL ====================
+  // Reveals the Contact section when it enters the viewport.
+  // Respects the user's prefers-reduced-motion setting.
+  const revealEl = document.querySelector("#contact.reveal");
+
+  if (revealEl) {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      revealEl.classList.add("is-visible");
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      observer.observe(revealEl);
+    }
+  }
+
+  // ==================== MOBILE MENU ====================
   const menuToggle = document.getElementById("menu-toggle");
   const navList = document.getElementById("nav-list");
   const header = document.querySelector(".site-header");
@@ -13,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
   });
 
+  // ==================== SMOOTH SECTION NAVIGATION ====================
   navList.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", (event) => {
       const targetId = link.getAttribute("href");
@@ -21,11 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       event.preventDefault();
 
-      // Close mobile menu
+      // Close mobile menu before navigating.
+
       navList.classList.remove("open");
       menuToggle.setAttribute("aria-expanded", "false");
 
-      // HOME
+      // Home navigation.
+
       if (targetId === "#main-content") {
         window.scrollTo({
           top: 0,
@@ -36,7 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Other sections
+      // Other section navigation.
+
       const target = document.querySelector(targetId);
 
       if (!target) return;
