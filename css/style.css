@@ -5,9 +5,9 @@
   --navy: #0b1e3d;
   --orange: #ea580c;
   --red: rgb(255, 0, 0);
-  --linkedin-blue: #0a66c2;
+  --linkedin-blue: oklch(0.52 0.17 251);
   --linkedin-blue-dark: #084a94;
-  --off-white: aliceblue;
+  --off-white: oklch(0.985 0.006 84);
   --body-text: #605a5a;
   --fontBold: 700;
   --spaceNone: 0;
@@ -15,15 +15,15 @@
   --shadow-md: 0 8px 24px rgba(11, 30, 61, 0.12);
   --shadow-lg: 0 20px 45px rgba(11, 30, 61, 0.22);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --html: #e34f26;
-  --css: #1572b6;
-  --javascript: #f7df1f;
-  --react: #61dafb;
-  --next: #000000;
-  --tailwind: #06b6d4;
-  --bootstrap: #7952b3;
-  --typescript: #3178c6;
-  --node: #339933;
+  --html: oklch(0.59 0.2 41);
+  --css: oklch(0.55 0.17 251);
+  --javascript: oklch(0.72 0.14 90);
+  --react: oklch(0.62 0.13 221);
+  --next: oklch(0.12 0 0);
+  --tailwind: oklch(0.62 0.13 221);
+  --bootstrap: oklch(0.48 0.2 295);
+  --typescript: oklch(0.54 0.17 250);
+  --node: oklch(0.53 0.14 145);
 }
 
 /* ==================== GLOBAL / TYPOGRAPHY ==================== */
@@ -329,7 +329,7 @@ header {
 
 #linkedin-btn:hover,
 #linkedin-btn:focus-visible {
-  background-color: var(--red);
+  background-color: var(--orange);
   color: var(--off-white);
   transform: translateY(3px);
 }
@@ -341,7 +341,7 @@ header {
 
 #email-btn:hover,
 #email-btn:focus-visible {
-  background-color: var(--orange);
+  background-color: var(--linkedin-blue);
   color: var(--off-white);
 }
 
@@ -566,15 +566,6 @@ header {
   grid-template-columns: 1fr 1.2fr;
   gap: 50px;
   align-items: start;
-}
-
-.contact-lede {
-  font-size: 20px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-  margin-top: -20px;
-  text-align: center;
-  font-weight: 500;
 }
 
 .contact-methods {
@@ -1106,12 +1097,6 @@ footer {
     margin-bottom: 32px;
   }
 
-  .contact-lede {
-    font-size: 17px;
-    text-align: center;
-    margin-top: 1px;
-  }
-
   .contact-method {
     padding: 14px;
     gap: 12px;
@@ -1178,10 +1163,6 @@ footer {
 
   #projects-p {
     font-size: 19px;
-  }
-
-  .contact-lede {
-    font-size: 18px;
   }
 
   #contact h2 {
