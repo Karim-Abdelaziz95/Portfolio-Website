@@ -5,8 +5,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menu-toggle");
   const navList = document.getElementById("nav-list");
   const contactForm = document.getElementById("contactForm");
+  const navLinks = navList ? navList.querySelectorAll("a") : [];
 
   if (!menuToggle || !navList) return;
+
+  // Check prefers-reduced-motion
+  const prefersReducedMotion = () =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ==================== MOBILE MENU ====================
   const closeMenu = () => {
@@ -19,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     menuToggle.setAttribute("aria-expanded", String(isOpen));
   });
 
-  // Close the mobile menu when clicking outside it.
+  // Close the mobile menu when clicking outside it
   document.addEventListener("click", (event) => {
     if (!navList.classList.contains("open")) return;
 
@@ -29,13 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!clickedInsideMenu) closeMenu();
   });
 
-  // Close the mobile menu with Escape.
+  // Close the mobile menu with Escape and return focus
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeMenu();
+    if (event.key === "Escape" && navList.classList.contains("open")) {
+      closeMenu();
+      menuToggle.focus();
+    }
   });
 
   // ==================== SMOOTH SECTION NAVIGATION ====================
-  navList.querySelectorAll("a").forEach((link) => {
+  navLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       const targetId = link.getAttribute("href");
 
@@ -44,20 +52,21 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
       closeMenu();
 
-      // Home navigation.
+      const scrollBehavior = prefersReducedMotion() ? "auto" : "smooth";
+
+      // Home navigation
       if (targetId === "#main-content") {
         window.scrollTo({
           top: 0,
-          behavior: "smooth",
+          behavior: scrollBehavior,
         });
 
         history.pushState(null, "", targetId);
         return;
       }
 
-      // Other section navigation.
+      // Target element navigation
       const target = document.querySelector(targetId);
-
       if (!target) return;
 
       const heading =
@@ -76,12 +85,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
       window.scrollTo({
         top: Math.max(0, targetPosition),
-        behavior: "smooth",
+        behavior: scrollBehavior,
       });
 
       history.pushState(null, "", targetId);
     });
   });
+
+  // ==================== ACTIVE LINK SCROLL SPY ====================
+  const sections = document.querySelectorAll(
+    "main > section[id], section#about, section#services, section#projects, section#contact",
+  );
+  if ("IntersectionObserver" in window && sections.length > 0) {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: 0,
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const currentId = `#${entry.target.id}`;
+          navLinks.forEach((link) => {
+            const isMatch = link.getAttribute("href") === currentId;
+            if (isMatch) {
+              link.classList.add("active");
+              link.setAttribute("aria-current", "page");
+            } else {
+              link.classList.remove("active");
+              link.removeAttribute("aria-current");
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((sec) => sectionObserver.observe(sec));
+
+    // Observe hero / top
+    const heroSec = document.querySelector(".hero");
+    if (heroSec) {
+      const heroObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navLinks.forEach((link) => {
+                if (link.getAttribute("href") === "#main-content") {
+                  link.classList.add("active");
+                  link.setAttribute("aria-current", "page");
+                } else {
+                  link.classList.remove("active");
+                  link.removeAttribute("aria-current");
+                }
+              });
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+      heroObserver.observe(heroSec);
+    }
+  }
 
   // ==================== CONTACT FORM ====================
   if (contactForm) {
@@ -95,6 +160,11 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.get("subject") || "General Inquiry",
       ).trim();
       const message = String(formData.get("message") || "").trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill in all required fields.");
+        return;
+      }
 
       const mailSubject = encodeURIComponent(`${subject} — Portfolio Contact`);
       const mailBody = encodeURIComponent(
