@@ -1090,8 +1090,40 @@ footer {
     padding: 24px 18px;
   }
 
+  p {
+    font-size: 18px;
+  }
+
   #main-heading {
-    font-size: 26px;
+    font-size: 37px;
+  }
+
+  #main-p {
+    font-size: 19px;
+  }
+
+  #about-p {
+    font-size: 19px;
+  }
+
+  #p-services {
+    font-size: 19px;
+  }
+
+  #projects-p {
+    font-size: 19px;
+  }
+
+  .contact-lede {
+    font-size: 18px;
+  }
+
+  #contact h2 {
+    font-size: 35px;
+  }
+
+  #contact h3 {
+    font-size: 20px;
   }
 
   .btn {
