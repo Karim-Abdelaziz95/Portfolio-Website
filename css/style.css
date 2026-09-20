@@ -52,10 +52,9 @@ h3 {
 
 p {
   color: var(--body-text);
-  font-size: 23px;
-  line-height: 1.2;
+  font-size: 22px;
+  line-height: 1.45;
   font-weight: 500;
-  letter-spacing: -0.06em;
 }
 
 a {
@@ -426,9 +425,9 @@ header {
   padding: 0;
   display: grid;
   margin-bottom: 50px;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   position: relative;
-  gap: 50px;
+  gap: 30px;
 }
 
 .projects-list article {
@@ -449,18 +448,35 @@ header {
 
 #projects iframe {
   width: 100%;
-  height: 625px;
-  border: none;
+  height: 520px;
+  border: 0;
   border-radius: 20px;
+  display: block;
+}
+
+.project-iframe {
+  width: 100%;
   overflow: hidden;
+  border-radius: 20px;
+  margin: 20px 0;
+  background: var(--off-white);
+}
+
+.project-iframe--game {
+  max-width: 100%;
 }
 
 #projects #game-iframe {
-  width: 70%;
+  width: 100%;
   height: 500px;
-  border: none;
+  border: 0;
   border-radius: 20px;
-  overflow: hidden;
+  display: block;
+}
+
+#projects #cleaning-website-iframe {
+  width: 100%;
+  height: 560px;
 }
 
 .game-iframe-container {
@@ -481,7 +497,7 @@ header {
   margin: 15px 0;
 }
 
-project-link {
+.project-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -789,7 +805,7 @@ footer {
   }
 
   .projects-list {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   footer {
@@ -807,6 +823,14 @@ footer {
 
 /* ==================== RESPONSIVE DESIGN: TABLET / MOBILE ==================== */
 @media (max-width: 926px) {
+  html {
+    scroll-padding-top: 0;
+  }
+
+  section[id] {
+    scroll-margin-top: 0;
+  }
+
   h3 {
     color: var(--orange);
     font-size: 20px;
@@ -877,12 +901,23 @@ footer {
     justify-content: center;
   }
 
+  header {
+    position: relative !important;
+    top: auto;
+    left: auto;
+  }
+
+  .hero {
+    margin-top: 30px;
+  }
+
+  .projects-list {
+    grid-template-columns: 1fr;
+  }
+
   #projects iframe {
-    width: 1200px;
-    height: 600px;
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
+    width: 100%;
+    height: 450px;
   }
 
   .projects-list article {
@@ -900,7 +935,12 @@ footer {
 
   #projects #game-iframe {
     width: 100%;
-    height: 300px;
+    height: 325px;
+  }
+
+  #projects #cleaning-website-iframe {
+    width: 100%;
+    height: 325px;
   }
 
   #contact {
@@ -1016,10 +1056,7 @@ footer {
 
   #projects iframe {
     width: 100%;
-    height: 400px;
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
+    height: 360px;
   }
 
   #about {
@@ -1032,12 +1069,12 @@ footer {
 
   #projects #game-iframe {
     width: 100%;
-    height: 250px;
+    height: 300px;
   }
 
   #projects #cleaning-website-iframe {
     width: 100%;
-    height: 370px;
+    height: 365px;
   }
 
   #contact h3 {
@@ -1090,6 +1127,18 @@ footer {
     padding: 24px 18px;
   }
 
+  .projects-list article {
+    padding: 18px;
+  }
+
+  .contact-form-wrapper {
+    padding: 1.25rem;
+  }
+
+  .project-iframe {
+    border-radius: 16px;
+  }
+
   p {
     font-size: 18px;
   }
@@ -1135,4 +1184,43 @@ footer {
   .btn-link {
     justify-content: center;
   }
+}
+
+/* ==================== ACCESSIBILITY / REDUCED MOTION ==================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==================== FINAL RESPONSIVE SAFETY ==================== */
+img,
+iframe,
+input,
+select,
+textarea,
+button {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  box-sizing: border-box;
+}
+
+.project-link,
+.contact-method-value,
+#copyright {
+  overflow-wrap: anywhere;
 }
