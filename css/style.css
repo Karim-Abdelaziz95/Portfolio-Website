@@ -72,7 +72,7 @@ body {
 
 h2 {
   color: var(--navy);
-  font-size: 35px;
+  font-size: 37px;
   font-weight: var(--fontBold);
 }
 
@@ -350,6 +350,10 @@ header {
 }
 
 /* ==================== PROJECTS SECTION ==================== */
+.projects-list p{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 #projects-p {
   margin-top: -25px;
   margin-bottom: 25px;
@@ -427,6 +431,14 @@ header {
   font-weight: 500;
 }
 
+ #contact h2 {
+    font-size: 37px;
+  }
+  
+ #contact h3 {
+    font-size: 24px;
+  }
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -435,11 +447,12 @@ header {
 }
 
 .contact-lede {
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.6;
   margin-bottom: 30px;
   margin-top: -20px;
   text-align: center;
+  font-weight: 500;
 }
 
 .contact-methods {
@@ -650,33 +663,6 @@ footer {
 
 .projects-header {
   margin-bottom: 25px;
-}
-
-/* ==================== SCROLL REVEAL / ACCESSIBILITY ==================== */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.7s var(--ease),
-    transform 0.7s var(--ease);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    transition-duration: 0.001ms !important;
-  }
-
-  .reveal,
-  .contact-method,
-  .btn-submit {
-    opacity: 1 !important;
-    transform: none !important;
-  }
 }
 
 /* ==================== RESPONSIVE DESIGN: TABLET / SMALL DESKTOP ==================== */
@@ -943,8 +929,8 @@ footer {
     height: 250px;
   }
 
-  .reveal .section-text {
-    font-size: 20px;
+  #contact h3 {
+    font-size: 19px;
   }
 
   #contact {
@@ -956,7 +942,7 @@ footer {
   }
 
   .contact-lede {
-    font-size: 16px;
+    font-size: 17px;
     text-align: center;
     margin-top: 1px;
   }
